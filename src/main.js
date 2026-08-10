@@ -36,10 +36,11 @@ let funnel = {
 
 // ─── Brochure HTML ─────────────────────────────────────────────────────────────
 function renderBrochure() {
-  const offeringsHTML = offerings.map((o) => `
+  const offeringsHTML = offerings.map((o, i) => `
     <div class="offering fade-up" id="offering-${o.id}">
       <div class="offering-inner">
-        <span class="offering-symbol">${o.symbol}</span>
+        <p class="offering-num">0${i + 1}</p>
+        <div class="offering-photo" data-label="${o.name}"></div>
         <h2 class="offering-name">${o.name}</h2>
         <p class="offering-tagline">${o.tagline}</p>
         <p class="offering-feel">${o.feel}</p>
@@ -60,7 +61,7 @@ function renderBrochure() {
         <ul class="offering-includes">
           ${o.included.map((item) => `<li>${item}</li>`).join('')}
         </ul>
-        <button type="button" class="offering-cta" data-interest="${o.id}">Talk to an advisor →</button>
+        <button type="button" class="offering-cta" data-interest="${o.id}">Talk to an Advisor →</button>
       </div>
     </div>
   `).join('');
@@ -82,16 +83,14 @@ function renderBrochure() {
   return `
     <nav class="site-nav" id="siteNav">
       <a href="#" class="nav-logo">Orbital<span> Ascent</span></a>
-      <button type="button" class="nav-cta" id="navCta">Talk to an Advisor</button>
+      <button type="button" class="nav-cta" id="navCta">Join the List</button>
     </nav>
 
     <section class="hero">
-      <div class="hero-glow"></div>
-      <div class="hero-planet"></div>
-      <p class="hero-eyebrow">Space Tourism · Est. 2021</p>
-      <h1 class="hero-headline">The Overview<br>Effect.<br>Live it.</h1>
+      <p class="hero-eyebrow">The Future, Documented</p>
+      <h1 class="hero-headline">The Overview<br>Effect.<br>Live It.</h1>
       <p class="hero-sub">Orbital flights, lunar flybys, and extended station residencies for the world's most adventurous travellers.</p>
-      <button type="button" class="hero-cta" id="heroCta">Explore Missions</button>
+      <button type="button" class="hero-cta" id="heroCta">Explore the Program →</button>
       <div class="scroll-hint">Scroll</div>
     </section>
 
@@ -103,6 +102,7 @@ function renderBrochure() {
     ${offeringsHTML}
 
     <section class="stats-section fade-up">
+      <p class="stats-eyebrow">By the Numbers</p>
       <div class="stats-grid">${statsHTML}</div>
     </section>
 
@@ -118,20 +118,19 @@ function renderBrochure() {
     </section>
 
     <section class="close-cta-section fade-up">
-      <div class="close-cta-glow"></div>
-      <h2 class="close-cta-headline">Ready to begin<br>your mission?</h2>
+      <h2 class="close-cta-headline">Where Will<br>You Be<br>In It?</h2>
       <p class="close-cta-sub">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
-      <button type="button" class="close-cta-button" id="closeCta">Talk to an Advisor</button>
+      <button type="button" class="close-cta-button" id="closeCta">Join the Mission →</button>
     </section>
 
     <footer class="site-footer">© 2026 Orbital Ascent. All missions are fictional — for demonstration purposes only.</footer>
 
     <div class="sticky-bar" id="stickyBar">
       <div class="sticky-bar-copy">
-        <strong>Interested?</strong>
+        <strong>Stay Informed</strong>
         Reach an advisor in under a minute.
       </div>
-      <button type="button" class="sticky-bar-btn" id="stickyBarBtn">Talk to an Advisor</button>
+      <button type="button" class="sticky-bar-btn" id="stickyBarBtn">Join the List →</button>
     </div>
   `;
 }
