@@ -37,7 +37,7 @@ let funnel = {
 // ─── Brochure HTML ─────────────────────────────────────────────────────────────
 function renderBrochure() {
   const offeringsHTML = offerings.map((o, i) => `
-    <div class="offering fade-up" id="offering-${o.id}">
+    <div class="offering" id="offering-${o.id}" data-index="${i}">
       <div class="offering-inner">
         <p class="offering-num">0${i + 1}</p>
         <div class="offering-photo" data-label="${o.name}"></div>
@@ -65,6 +65,10 @@ function renderBrochure() {
       </div>
     </div>
   `).join('');
+
+  const dotsHTML = offerings.map((_, i) =>
+    `<button type="button" class="carousel-dot${i === 0 ? ' is-active' : ''}" data-slide="${i}" aria-label="Slide ${i + 1}"></button>`
+  ).join('');
 
   const statsHTML = stats.map((s) => `
     <div class="stat-cell">
@@ -99,7 +103,16 @@ function renderBrochure() {
       <h2 class="section-heading">Three ways to leave the planet.</h2>
     </section>
 
-    ${offeringsHTML}
+    <section class="carousel-section fade-up" id="offeringsCarousel">
+      <div class="carousel-track" id="carouselTrack">
+        ${offeringsHTML}
+      </div>
+      <div class="carousel-controls">
+        <button type="button" class="carousel-arrow" id="carouselPrev" aria-label="Previous">←</button>
+        <div class="carousel-dots" id="carouselDots">${dotsHTML}</div>
+        <button type="button" class="carousel-arrow" id="carouselNext" aria-label="Next">→</button>
+      </div>
+    </section>
 
     <section class="stats-section fade-up">
       <p class="stats-eyebrow">By the Numbers</p>
@@ -318,6 +331,8 @@ function bindBrochureEvents() {
   document.getElementById('funnelOverlay')?.addEventListener('click', (e) => {
     if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
   });
+
+  initCarousel();
 }
 
 // ─── Funnel events ────────────────────────────────────────────────────────────
@@ -360,6 +375,42 @@ function bindFunnelEvents() {
   });
 
   document.getElementById('confirmDone')?.addEventListener('click', closeFunnel);
+}
+
+// ─── Carousel ─────────────────────────────────────────────────────────────────
+function initCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const prev  = document.getElementById('carouselPrev');
+  const next  = document.getElementById('carouselNext');
+  const dots  = document.querySelectorAll('.carousel-dot');
+  if (!track) return;
+
+  let current = 0;
+  const count = offerings.length;
+
+  function goTo(index) {
+    current = Math.max(0, Math.min(count - 1, index));
+    track.scrollTo({ left: track.offsetWidth * current, behavior: 'smooth' });
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+    if (prev) prev.classList.toggle('is-disabled', current === 0);
+    if (next) next.classList.toggle('is-disabled', current === count - 1);
+  }
+
+  prev?.addEventListener('click', () => goTo(current - 1));
+  next?.addEventListener('click', () => goTo(current + 1));
+  dots.forEach((d) => d.addEventListener('click', () => goTo(Number(d.dataset.slide))));
+
+  // Sync dots when user drag-scrolls
+  let scrollTimer;
+  track.addEventListener('scroll', () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const idx = Math.round(track.scrollLeft / track.offsetWidth);
+      if (idx !== current) goTo(idx);
+    }, 80);
+  }, { passive: true });
+
+  goTo(0);
 }
 
 // ─── Scroll behaviour ─────────────────────────────────────────────────────────
