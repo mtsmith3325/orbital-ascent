@@ -20,9 +20,10 @@ A mobile-first responsive web app for Orbital Ascent, a space tourism company. T
 **Why this order matters:** the brochure does the persuading; the quiz-style funnel is just a well-designed off-ramp for someone already sold. It is not the default landing experience.
 
 ## Tech Stack
-- [Framework — e.g. React + Vite / Vue] — *update once selected*
-- [Styling — e.g. Tailwind CSS] — *update once selected*
-- Deployed via [Vercel / Netlify] — *update once selected*
+- **Vanilla JavaScript + Vite** — lightweight, no framework overhead
+- **CSS custom properties** — cinematic dark-space design tokens, scroll animations
+- **Google Fonts** — Cormorant Garamond (display) + Space Grotesk (UI)
+- Deployed via Vercel / Netlify
 
 ## Getting Started
 ```bash
@@ -31,8 +32,10 @@ npm install
 
 # run locally
 npm run dev
+
+# build for production
+npm run build
 ```
-*(Commands will be finalized once the tech stack is locked in — see .claude/context.md)*
 
 ## Project Structure
 ```
@@ -54,4 +57,4 @@ orbital-ascent-p303/
 ```
 
 ## Status
-Scaffolding stage — see `.claude/memory/decisions.md` for progress log.
+MVP complete — cinematic brochure scroll + contact funnel overlay, full end-to-end flow working.

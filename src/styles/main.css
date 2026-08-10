@@ -72,9 +72,7 @@ body {
   text-decoration: none;
 }
 
-.nav-logo span {
-  color: var(--gold);
-}
+.nav-logo span { color: var(--gold); }
 
 .nav-cta {
   padding: 0.5rem 1.1rem;
@@ -90,10 +88,7 @@ body {
   transition: background 0.2s, color 0.2s;
 }
 
-.nav-cta:hover {
-  background: var(--gold);
-  color: #06080f;
-}
+.nav-cta:hover { background: var(--gold); color: #06080f; }
 
 /* ─── HERO ───────────────────────────────────────────────────────────────── */
 .hero {
@@ -128,10 +123,7 @@ body {
   height: min(260px, 72vw);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 38%,
-    #3a5f8f 0%,
-    #1a3a60 35%,
-    #0e1e3a 65%,
-    #070c1a 100%);
+    #3a5f8f 0%, #1a3a60 35%, #0e1e3a 65%, #070c1a 100%);
   box-shadow:
     0 0 0 1px rgba(100, 140, 200, 0.15),
     0 0 60px rgba(40, 80, 160, 0.25),
@@ -148,7 +140,6 @@ body {
   inset: -12px;
   border-radius: 50%;
   border: 1px solid rgba(100, 150, 220, 0.12);
-  box-shadow: 0 0 40px rgba(60, 100, 200, 0.08);
 }
 
 .hero-eyebrow {
@@ -249,7 +240,7 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* ─── OFFERING CARDS ─────────────────────────────────────────────────────── */
+/* ─── OFFERINGS ──────────────────────────────────────────────────────────── */
 .offering {
   padding: 5rem 1.5rem;
   border-top: 1px solid var(--border);
@@ -300,11 +291,7 @@ body {
   flex-wrap: wrap;
 }
 
-.meta-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
+.meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
 
 .meta-label {
   font-size: 0.6rem;
@@ -346,13 +333,6 @@ body {
   top: 0.1em;
 }
 
-.offering-price {
-  font-family: var(--display);
-  font-size: 1.1rem;
-  color: var(--white-dim);
-  margin-bottom: 1.25rem;
-}
-
 .offering-cta {
   padding: 0.75rem 1.5rem;
   background: transparent;
@@ -367,10 +347,7 @@ body {
   transition: background 0.2s, color 0.2s;
 }
 
-.offering-cta:hover {
-  background: var(--gold);
-  color: #06080f;
-}
+.offering-cta:hover { background: var(--gold); color: #06080f; }
 
 /* ─── STATS ──────────────────────────────────────────────────────────────── */
 .stats-section {
@@ -452,10 +429,7 @@ body {
   color: var(--silver);
 }
 
-.testimonial-meta span {
-  color: var(--gold);
-  margin-left: 0.6rem;
-}
+.testimonial-meta span { color: var(--gold); margin-left: 0.6rem; }
 
 /* ─── CLOSING CTA ────────────────────────────────────────────────────────── */
 .close-cta-section {
@@ -473,8 +447,7 @@ body {
   transform: translateX(-50%);
   width: 120vw;
   height: 60vh;
-  background: radial-gradient(ellipse at center,
-    rgba(201, 168, 76, 0.12) 0%, transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -513,7 +486,7 @@ body {
 .close-cta-button:hover  { background: var(--gold-bright); }
 .close-cta-button:active { transform: scale(0.97); }
 
-/* ─── STICKY CTA BAR ─────────────────────────────────────────────────────── */
+/* ─── STICKY BAR ─────────────────────────────────────────────────────────── */
 .sticky-bar {
   position: fixed;
   bottom: 0; left: 0; right: 0;
@@ -531,22 +504,10 @@ body {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.sticky-bar.visible {
-  transform: translateY(0);
-}
+.sticky-bar.visible { transform: translateY(0); }
 
-.sticky-bar-copy {
-  font-size: 0.8rem;
-  color: var(--silver);
-  line-height: 1.4;
-  flex: 1;
-}
-
-.sticky-bar-copy strong {
-  color: var(--white);
-  display: block;
-  font-size: 0.88rem;
-}
+.sticky-bar-copy { font-size: 0.8rem; color: var(--silver); line-height: 1.4; flex: 1; }
+.sticky-bar-copy strong { color: var(--white); display: block; font-size: 0.88rem; }
 
 .sticky-bar-btn {
   flex-shrink: 0;
@@ -582,10 +543,7 @@ body {
   transition: opacity 0.35s ease;
 }
 
-.funnel-overlay.open {
-  opacity: 1;
-  pointer-events: all;
-}
+.funnel-overlay.open { opacity: 1; pointer-events: all; }
 
 .funnel-sheet {
   background: #0c1220;
@@ -596,11 +554,10 @@ body {
   transform: translateY(100%);
   transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
   -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 
-.funnel-overlay.open .funnel-sheet {
-  transform: translateY(0);
-}
+.funnel-overlay.open .funnel-sheet { transform: translateY(0); }
 
 .funnel-handle {
   width: 36px;
@@ -654,32 +611,11 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.funnel-heading {
-  margin-bottom: 1.75rem;
-}
+.funnel-heading { margin-bottom: 1.75rem; }
+.funnel-eyebrow { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.funnel-h1 { font-family: var(--display); font-size: clamp(2.2rem, 9vw, 3rem); font-weight: 300; line-height: 1.08; color: var(--white); }
 
-.funnel-eyebrow {
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.5rem;
-}
-
-.funnel-h1 {
-  font-family: var(--display);
-  font-size: clamp(2.2rem, 9vw, 3rem);
-  font-weight: 300;
-  line-height: 1.08;
-  color: var(--white);
-}
-
-.option-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.65rem;
-  margin-bottom: 1rem;
-}
+.option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 1rem; }
 
 .option-card {
   display: flex;
@@ -697,18 +633,13 @@ body {
 }
 
 .option-card:active { transform: scale(0.96); }
+.option-card.is-selected, .option-card:hover { border-color: var(--border-hi); background: rgba(201,168,76,0.08); }
 
-.option-card.is-selected,
-.option-card:hover {
-  border-color: var(--border-hi);
-  background: rgba(201, 168, 76, 0.08);
-}
+.option-symbol  { font-size: 1.3rem; color: var(--gold); margin-bottom: 0.3rem; }
+.option-label   { font-size: 0.85rem; font-weight: 500; color: var(--white); line-height: 1.3; }
+.option-tagline { font-size: 0.68rem; color: var(--silver); line-height: 1.4; }
 
-.option-symbol { font-size: 1.3rem; color: var(--gold); margin-bottom: 0.3rem; }
-.option-label  { font-size: 0.85rem; font-weight: 500; color: var(--white); line-height: 1.3; }
-.option-tagline{ font-size: 0.68rem; color: var(--silver); line-height: 1.4; }
-
-.option-list   { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1rem; }
+.option-list { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1rem; }
 
 .timeline-card {
   display: flex;
@@ -725,12 +656,7 @@ body {
 }
 
 .timeline-card:active { transform: scale(0.98); }
-
-.timeline-card.is-selected,
-.timeline-card:hover {
-  border-color: var(--border-hi);
-  background: rgba(201, 168, 76, 0.08);
-}
+.timeline-card.is-selected, .timeline-card:hover { border-color: var(--border-hi); background: rgba(201,168,76,0.08); }
 
 .timeline-label { font-family: var(--display); font-size: 1.6rem; font-weight: 300; color: var(--white); line-height: 1; }
 .timeline-sub   { font-size: 0.72rem; color: var(--silver); margin-top: 0.15rem; }
@@ -761,8 +687,7 @@ body {
   transition: border-color 0.2s;
 }
 
-.field-group input:focus,
-.field-group select:focus { outline: none; border-color: var(--gold); }
+.field-group input:focus, .field-group select:focus { outline: none; border-color: var(--gold); }
 .field-group input::placeholder { color: rgba(176, 188, 200, 0.3); }
 
 .field-group select {
@@ -808,7 +733,7 @@ body {
 
 .funnel-back:hover { color: var(--white); }
 
-/* ─── CONFIRM SCREEN ─────────────────────────────────────────────────────── */
+/* ─── CONFIRMATION ───────────────────────────────────────────────────────── */
 .confirm-inner {
   text-align: center;
   padding: 2rem 1.5rem calc(2.5rem + var(--safe-b));
@@ -848,7 +773,7 @@ body {
   text-align: left;
 }
 
-.confirm-pkg-name { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; }
+.confirm-pkg-name    { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.35rem; }
 .confirm-pkg-tagline { font-family: var(--display); font-size: 1.3rem; font-weight: 300; color: var(--white); line-height: 1.25; }
 
 .confirm-agent { margin-bottom: 1.25rem; }
@@ -856,13 +781,7 @@ body {
 .confirm-agent-name  { font-family: var(--display); font-size: 1.5rem; font-weight: 300; color: var(--white); line-height: 1.1; }
 .confirm-agent-title { font-size: 0.73rem; color: var(--silver); margin-top: 0.12rem; }
 
-.confirm-eta {
-  font-size: 0.86rem;
-  color: var(--silver-bright);
-  line-height: 1.65;
-  margin-bottom: 1.25rem;
-}
-
+.confirm-eta { font-size: 0.86rem; color: var(--silver-bright); line-height: 1.65; margin-bottom: 1.25rem; }
 .confirm-eta strong { color: var(--gold-bright); font-weight: 500; }
 
 .confirm-tagline {
@@ -905,7 +824,4 @@ body {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.fade-up.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-up.in-view { opacity: 1; transform: translateY(0); }

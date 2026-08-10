@@ -273,7 +273,7 @@ function refreshFunnel() {
   bindFunnelEvents();
 }
 
-function openFunnel(interestId = null) {
+function openFunnel(interestId) {
   if (interestId) funnel.interest = interestId;
   funnel.open = true;
   const overlay = document.getElementById('funnelOverlay');
@@ -290,7 +290,6 @@ function closeFunnel() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
-  // Reset funnel to step 1 if coming from confirm
   if (funnel.step === 'confirm') {
     funnel.step = 1;
     funnel.interest = null;
@@ -309,16 +308,14 @@ function bindBrochureEvents() {
   document.getElementById('closeCta')?.addEventListener('click', () => openFunnel());
   document.getElementById('stickyBarBtn')?.addEventListener('click', () => openFunnel());
 
-  // Offering inline CTAs — pre-select interest
   document.querySelectorAll('.offering-cta[data-interest]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      funnel.step = 2; // skip to timeline (interest already known)
+      funnel.step = 2;
       openFunnel(btn.dataset.interest);
       refreshFunnel();
     });
   });
 
-  // Backdrop click closes funnel
   document.getElementById('funnelOverlay')?.addEventListener('click', (e) => {
     if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
   });
@@ -370,21 +367,18 @@ function bindFunnelEvents() {
 function initScrollBehavior() {
   const nav = document.getElementById('siteNav');
   const bar = document.getElementById('stickyBar');
-  let heroBottom = 0;
-
   const hero = document.querySelector('.hero');
-  if (hero) heroBottom = hero.offsetHeight;
+  const heroBottom = hero ? hero.offsetHeight : 0;
 
   const onScroll = () => {
     const y = window.scrollY;
-    if (nav)  nav.classList.toggle('scrolled', y > 60);
-    if (bar)  bar.classList.toggle('visible', y > heroBottom * 0.6);
+    if (nav) nav.classList.toggle('scrolled', y > 60);
+    if (bar) bar.classList.toggle('visible', y > heroBottom * 0.6);
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Intersection observer for fade-up elements
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
     { threshold: 0.12 }

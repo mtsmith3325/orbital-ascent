@@ -55,9 +55,9 @@ export const offerings = [
 ];
 
 export const stats = [
-  { value: '47', label: 'Missions completed' },
-  { value: '0',  label: 'Passenger injuries' },
-  { value: '112',label: 'Civilians flown' },
+  { value: '47',    label: 'Missions completed' },
+  { value: '0',     label: 'Passenger injuries' },
+  { value: '112',   label: 'Civilians flown' },
   { value: '99.6%', label: 'Launch success rate' }
 ];
 
@@ -103,7 +103,7 @@ export const agents = {
   orbital:  { name: 'Solène Verne',   title: 'Senior Space Advisor',        responseTime: '4 hours' },
   lunar:    { name: 'Kai Nakamura',   title: 'Lunar Experience Specialist',  responseTime: '4 hours' },
   station:  { name: 'Adriana Torres', title: 'Station Residency Lead',       responseTime: '4 hours' },
-  surprise: { name: 'Marcus Webb',    title: 'Mission Curator',             responseTime: '4 hours' }
+  surprise: { name: 'Marcus Webb',    title: 'Mission Curator',              responseTime: '4 hours' }
 };
 
 export const packages = {
