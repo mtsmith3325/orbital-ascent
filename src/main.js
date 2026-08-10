@@ -93,6 +93,8 @@ function renderBrochure() {
     </nav>
 
     <section class="hero">
+      <video class="hero-video" src="/videos/hero-video.mp4" autoplay muted loop playsinline></video>
+      <div class="hero-overlay"></div>
       <p class="hero-eyebrow">The Future, Documented</p>
       <h1 class="hero-headline">The Overview<br>Effect.<br>Live It.</h1>
       <p class="hero-sub">Orbital flights, lunar flybys, and extended station residencies for the world's most adventurous travellers.</p>
