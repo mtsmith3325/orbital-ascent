@@ -40,7 +40,9 @@ function renderBrochure() {
     <div class="offering" id="offering-${o.id}" data-index="${i}">
       <div class="offering-inner">
         <p class="offering-num">0${i + 1}</p>
-        <div class="offering-photo" data-label="${o.name}"></div>
+        <div class="offering-photo" data-label="${o.name}">
+          ${o.video ? `<video src="${o.video}" autoplay muted loop playsinline></video>` : ''}
+        </div>
         <h2 class="offering-name">${o.name}</h2>
         <p class="offering-tagline">${o.tagline}</p>
         <p class="offering-feel">${o.feel}</p>
