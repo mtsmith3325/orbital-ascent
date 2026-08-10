@@ -1,227 +1,395 @@
 import '/src/styles/main.css';
-import { interestOptions, timelineOptions, bestTimeOptions, packages, agents } from './data/packages.js';
+import { offerings, stats, testimonials, interestOptions, timelineOptions, bestTimeOptions, packages, agents } from './data/packages.js';
 
 // ─── Starfield ──────────────────────────────────────────────────────────────
 (function initStarfield() {
   const canvas = document.getElementById('starfield');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-
   function draw() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const count = Math.floor((canvas.width * canvas.height) / 8000);
-    for (let i = 0; i < count; i++) {
+    const n = Math.floor((canvas.width * canvas.height) / 7500);
+    for (let i = 0; i < n; i++) {
       const x = Math.random() * canvas.width;
       const y = Math.random() * canvas.height;
       const r = Math.random() * 1.1 + 0.1;
-      const alpha = 0.25 + Math.random() * 0.65;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(200, 215, 245, ${alpha})`;
+      ctx.fillStyle = `rgba(200,215,245,${0.2 + Math.random() * 0.65})`;
       ctx.fill();
     }
   }
-
   draw();
   window.addEventListener('resize', draw);
 })();
 
-// ─── State ───────────────────────────────────────────────────────────────────
-let state = {
-  step: 1,              // 1 | 2 | 3 | 'confirm'
+// ─── Funnel State ─────────────────────────────────────────────────────────────
+let funnel = {
+  open: false,
+  step: 1,
   interest: null,
   timeline: null,
   contact: { name: '', phone: '', bestTime: 'Anytime' }
 };
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-function progress() {
-  if (state.step === 'confirm') return 100;
-  return Math.round((state.step / 3) * 100);
-}
-
-function stepHeader() {
-  const stepNum = state.step;
-  const label = stepNum === 3 ? 'Last step' : `Step ${stepNum} of 3`;
-  return `
-    <div class="step-header">
-      <div class="progress-track">
-        <div class="progress-fill" style="width:${progress()}%"></div>
-      </div>
-      <span class="step-label">${label}</span>
-    </div>
-  `;
-}
-
-// ─── Step 1 — interest ────────────────────────────────────────────────────────
-function renderStep1() {
-  return `
-    <div class="screen">
-      ${stepHeader()}
-      <div class="screen-content">
-        <div class="screen-heading">
-          <p class="eyebrow">Your Mission</p>
-          <h1>Where do you<br>want to go?</h1>
-        </div>
-        <div class="option-grid">
-          ${interestOptions.map((opt) => `
-            <button type="button" class="option-card${state.interest === opt.id ? ' is-selected' : ''}" data-interest="${opt.id}">
-              <span class="option-symbol">${opt.symbol}</span>
-              <span class="option-label">${opt.label}</span>
-              <span class="option-tagline">${opt.tagline}</span>
-            </button>
-          `).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// ─── Step 2 — timeline ────────────────────────────────────────────────────────
-function renderStep2() {
-  return `
-    <div class="screen">
-      ${stepHeader()}
-      <div class="screen-content">
-        <div class="screen-heading">
-          <p class="eyebrow">Your Timeline</p>
-          <h1>When are you<br>thinking?</h1>
-        </div>
-        <div class="option-list">
-          ${timelineOptions.map((opt) => `
-            <button type="button" class="timeline-card${state.timeline === opt.id ? ' is-selected' : ''}" data-timeline="${opt.id}">
-              <span class="timeline-label">${opt.label}</span>
-              <span class="timeline-sub">${opt.sub}</span>
-            </button>
-          `).join('')}
-        </div>
-        <button type="button" class="back-button" id="stepBack">← Back</button>
-      </div>
-    </div>
-  `;
-}
-
-// ─── Step 3 — contact ─────────────────────────────────────────────────────────
-function renderStep3() {
-  const timeOptions = bestTimeOptions.map((t) =>
-    `<option value="${t}"${state.contact.bestTime === t ? ' selected' : ''}>${t}</option>`
-  ).join('');
-
-  return `
-    <div class="screen">
-      ${stepHeader()}
-      <div class="screen-content">
-        <div class="screen-heading">
-          <p class="eyebrow">Your Details</p>
-          <h1>We'll have an<br>advisor reach out.</h1>
-        </div>
-        <form id="contactForm" class="contact-form" novalidate>
-          <div class="field-group">
-            <label for="contactName">Name</label>
-            <input type="text" id="contactName" autocomplete="name"
-              placeholder="Your name" value="${state.contact.name}" />
+// ─── Brochure HTML ─────────────────────────────────────────────────────────────
+function renderBrochure() {
+  const offeringsHTML = offerings.map((o) => `
+    <div class="offering fade-up" id="offering-${o.id}">
+      <div class="offering-inner">
+        <span class="offering-symbol">${o.symbol}</span>
+        <h2 class="offering-name">${o.name}</h2>
+        <p class="offering-tagline">${o.tagline}</p>
+        <p class="offering-feel">${o.feel}</p>
+        <div class="offering-meta">
+          <div class="meta-item">
+            <span class="meta-label">Duration</span>
+            <span class="meta-value">${o.duration}</span>
           </div>
-          <div class="field-group">
-            <label for="contactPhone">Phone</label>
-            <input type="tel" id="contactPhone" autocomplete="tel"
-              placeholder="+1 (555) 000-0000" value="${state.contact.phone}" />
+          <div class="meta-item">
+            <span class="meta-label">Altitude</span>
+            <span class="meta-value">${o.altitude}</span>
           </div>
-          <div class="field-group">
-            <label for="contactTime">Best time to reach you</label>
-            <select id="contactTime">${timeOptions}</select>
+          <div class="meta-item">
+            <span class="meta-label">Price</span>
+            <span class="meta-value">${o.price}</span>
           </div>
-          <button type="submit" class="cta-button">Connect Me →</button>
-        </form>
-        <button type="button" class="back-button" id="stepBack">← Back</button>
+        </div>
+        <ul class="offering-includes">
+          ${o.included.map((item) => `<li>${item}</li>`).join('')}
+        </ul>
+        <button type="button" class="offering-cta" data-interest="${o.id}">Talk to an advisor →</button>
       </div>
+    </div>
+  `).join('');
+
+  const statsHTML = stats.map((s) => `
+    <div class="stat-cell">
+      <div class="stat-value">${s.value}</div>
+      <div class="stat-label">${s.label}</div>
+    </div>
+  `).join('');
+
+  const testimonialsHTML = testimonials.map((t) => `
+    <div class="testimonial fade-up">
+      <p class="testimonial-quote">"${t.quote}"</p>
+      <p class="testimonial-meta">${t.name}<span>${t.mission}</span></p>
+    </div>
+  `).join('');
+
+  return `
+    <nav class="site-nav" id="siteNav">
+      <a href="#" class="nav-logo">Orbital<span> Ascent</span></a>
+      <button type="button" class="nav-cta" id="navCta">Talk to an Advisor</button>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-planet"></div>
+      <p class="hero-eyebrow">Space Tourism · Est. 2021</p>
+      <h1 class="hero-headline">The Overview<br>Effect.<br>Live it.</h1>
+      <p class="hero-sub">Orbital flights, lunar flybys, and extended station residencies for the world's most adventurous travellers.</p>
+      <button type="button" class="hero-cta" id="heroCta">Explore Missions</button>
+      <div class="scroll-hint">Scroll</div>
+    </section>
+
+    <section class="section fade-up" id="missions-heading">
+      <p class="section-eyebrow">Our Missions</p>
+      <h2 class="section-heading">Three ways to leave the planet.</h2>
+    </section>
+
+    ${offeringsHTML}
+
+    <section class="stats-section fade-up">
+      <div class="stats-grid">${statsHTML}</div>
+    </section>
+
+    <section class="section fade-up">
+      <p class="section-eyebrow">Mission Alumni</p>
+      <h2 class="section-heading">In their own words.</h2>
+    </section>
+
+    <section class="testimonials-section">
+      <div class="testimonials-inner">
+        ${testimonialsHTML}
+      </div>
+    </section>
+
+    <section class="close-cta-section fade-up">
+      <div class="close-cta-glow"></div>
+      <h2 class="close-cta-headline">Ready to begin<br>your mission?</h2>
+      <p class="close-cta-sub">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
+      <button type="button" class="close-cta-button" id="closeCta">Talk to an Advisor</button>
+    </section>
+
+    <footer class="site-footer">© 2026 Orbital Ascent. All missions are fictional — for demonstration purposes only.</footer>
+
+    <div class="sticky-bar" id="stickyBar">
+      <div class="sticky-bar-copy">
+        <strong>Interested?</strong>
+        Reach an advisor in under a minute.
+      </div>
+      <button type="button" class="sticky-bar-btn" id="stickyBarBtn">Talk to an Advisor</button>
     </div>
   `;
 }
 
-// ─── Confirmation ─────────────────────────────────────────────────────────────
-function renderConfirm() {
-  const pkg = packages[state.interest] || packages.surprise;
-  const agent = agents[state.interest] || agents.surprise;
-  const firstName = state.contact.name.split(' ')[0].trim() || 'Explorer';
-  const timeLabel = state.contact.bestTime === 'Anytime'
-    ? 'at your convenience'
-    : `${state.contact.bestTime.split('(')[0].trim().toLowerCase()}`;
+// ─── Funnel HTML ──────────────────────────────────────────────────────────────
+function progressPct() {
+  if (funnel.step === 'confirm') return 100;
+  return Math.round((funnel.step / 3) * 100);
+}
 
+function funnelHeader() {
+  const label = funnel.step === 3 ? 'Last step' : funnel.step === 'confirm' ? 'Complete' : `Step ${funnel.step} of 3`;
   return `
-    <div class="screen screen-confirm">
-      <div class="confirm-atmosphere"></div>
-      <div class="screen-content confirm-content">
+    <div class="funnel-progress-track">
+      <div class="funnel-progress-fill" style="width:${progressPct()}%"></div>
+    </div>
+    <p class="funnel-step-label">${label}</p>
+  `;
+}
+
+function renderFunnelStep() {
+  if (funnel.step === 1) {
+    const cards = interestOptions.map((o) => `
+      <button type="button" class="option-card${funnel.interest === o.id ? ' is-selected' : ''}" data-interest="${o.id}">
+        <span class="option-symbol">${o.symbol}</span>
+        <span class="option-label">${o.label}</span>
+        <span class="option-tagline">${o.tagline}</span>
+      </button>
+    `).join('');
+    return `
+      ${funnelHeader()}
+      <div class="funnel-heading">
+        <p class="funnel-eyebrow">Your Mission</p>
+        <h2 class="funnel-h1">Where do you<br>want to go?</h2>
+      </div>
+      <div class="option-grid">${cards}</div>
+    `;
+  }
+  if (funnel.step === 2) {
+    const cards = timelineOptions.map((o) => `
+      <button type="button" class="timeline-card${funnel.timeline === o.id ? ' is-selected' : ''}" data-timeline="${o.id}">
+        <span class="timeline-label">${o.label}</span>
+        <span class="timeline-sub">${o.sub}</span>
+      </button>
+    `).join('');
+    return `
+      ${funnelHeader()}
+      <div class="funnel-heading">
+        <p class="funnel-eyebrow">Your Timeline</p>
+        <h2 class="funnel-h1">When are you<br>thinking?</h2>
+      </div>
+      <div class="option-list">${cards}</div>
+      <button type="button" class="funnel-back" id="funnelBack">← Back</button>
+    `;
+  }
+  if (funnel.step === 3) {
+    const timeOpts = bestTimeOptions.map((t) =>
+      `<option value="${t}"${funnel.contact.bestTime === t ? ' selected' : ''}>${t}</option>`
+    ).join('');
+    return `
+      ${funnelHeader()}
+      <div class="funnel-heading">
+        <p class="funnel-eyebrow">Your Details</p>
+        <h2 class="funnel-h1">We'll have an<br>advisor reach out.</h2>
+      </div>
+      <form id="funnelForm" class="contact-form" novalidate>
+        <div class="field-group">
+          <label for="cName">Name</label>
+          <input type="text" id="cName" autocomplete="name" placeholder="Your name" value="${funnel.contact.name}" />
+        </div>
+        <div class="field-group">
+          <label for="cPhone">Phone</label>
+          <input type="tel" id="cPhone" autocomplete="tel" placeholder="+1 (555) 000-0000" value="${funnel.contact.phone}" />
+        </div>
+        <div class="field-group">
+          <label for="cTime">Best time to reach you</label>
+          <select id="cTime">${timeOpts}</select>
+        </div>
+        <button type="submit" class="funnel-submit">Connect Me →</button>
+      </form>
+      <button type="button" class="funnel-back" id="funnelBack">← Back</button>
+    `;
+  }
+  if (funnel.step === 'confirm') {
+    const pkg   = packages[funnel.interest]  || packages.surprise;
+    const agent = agents[funnel.interest]    || agents.surprise;
+    const first = (funnel.contact.name.split(' ')[0] || 'Explorer').trim();
+    const time  = funnel.contact.bestTime === 'Anytime'
+      ? 'at your convenience'
+      : funnel.contact.bestTime.split('(')[0].trim().toLowerCase();
+    return `
+      <div class="confirm-inner">
         <span class="confirm-emblem">✦</span>
-        <h1 class="confirm-headline">${firstName},<br>you're on our radar.</h1>
-        <div class="confirm-package">
-          <p class="confirm-package-name">${pkg.name}</p>
-          <p class="confirm-package-tagline">${pkg.tagline}</p>
+        <h2 class="confirm-headline">${first},<br>you're on our radar.</h2>
+        <div class="confirm-pkg">
+          <p class="confirm-pkg-name">${pkg.name}</p>
+          <p class="confirm-pkg-tagline">${pkg.tagline}</p>
         </div>
         <div class="confirm-agent">
           <p class="confirm-agent-label">Your advisor</p>
           <p class="confirm-agent-name">${agent.name}</p>
           <p class="confirm-agent-title">${agent.title}</p>
         </div>
-        <p class="confirm-eta">
-          Expect a call within <strong>${agent.responseTime}</strong> — ${timeLabel}.
-        </p>
+        <p class="confirm-eta">Expect a call within <strong>${agent.responseTime}</strong> — ${time}.</p>
         <p class="confirm-tagline">The countdown starts now.</p>
+        <button type="button" class="confirm-done" id="confirmDone">← Back to site</button>
+      </div>
+    `;
+  }
+}
+
+function renderFunnelOverlay() {
+  return `
+    <div class="funnel-overlay${funnel.open ? ' open' : ''}" id="funnelOverlay">
+      <div class="funnel-sheet" id="funnelSheet">
+        <div class="funnel-handle"></div>
+        <button type="button" class="funnel-close" id="funnelClose" aria-label="Close">×</button>
+        <div class="funnel-inner" id="funnelInner">
+          ${renderFunnelStep()}
+        </div>
       </div>
     </div>
   `;
 }
 
 // ─── Render ───────────────────────────────────────────────────────────────────
-function render() {
-  const app = document.getElementById('app');
-  if (state.step === 1)         app.innerHTML = renderStep1();
-  else if (state.step === 2)    app.innerHTML = renderStep2();
-  else if (state.step === 3)    app.innerHTML = renderStep3();
-  else                          app.innerHTML = renderConfirm();
-  bindEvents();
+function renderApp() {
+  document.getElementById('app').innerHTML = renderBrochure() + renderFunnelOverlay();
+  bindBrochureEvents();
+  bindFunnelEvents();
+  initScrollBehavior();
 }
 
-// ─── Events ───────────────────────────────────────────────────────────────────
-function bindEvents() {
-  // Step 1: interest selection — tap immediately advances
-  document.querySelectorAll('[data-interest]').forEach((btn) => {
+function refreshFunnel() {
+  const inner = document.getElementById('funnelInner');
+  if (inner) inner.innerHTML = renderFunnelStep();
+  const fill = document.querySelector('.funnel-progress-fill');
+  if (fill) fill.style.width = progressPct() + '%';
+  bindFunnelEvents();
+}
+
+function openFunnel(interestId = null) {
+  if (interestId) funnel.interest = interestId;
+  funnel.open = true;
+  const overlay = document.getElementById('funnelOverlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeFunnel() {
+  funnel.open = false;
+  const overlay = document.getElementById('funnelOverlay');
+  if (overlay) {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Reset funnel to step 1 if coming from confirm
+  if (funnel.step === 'confirm') {
+    funnel.step = 1;
+    funnel.interest = null;
+    funnel.timeline = null;
+    funnel.contact = { name: '', phone: '', bestTime: 'Anytime' };
+    refreshFunnel();
+  }
+}
+
+// ─── Brochure events ──────────────────────────────────────────────────────────
+function bindBrochureEvents() {
+  document.getElementById('navCta')?.addEventListener('click', () => openFunnel());
+  document.getElementById('heroCta')?.addEventListener('click', () => {
+    document.getElementById('missions-heading')?.scrollIntoView({ behavior: 'smooth' });
+  });
+  document.getElementById('closeCta')?.addEventListener('click', () => openFunnel());
+  document.getElementById('stickyBarBtn')?.addEventListener('click', () => openFunnel());
+
+  // Offering inline CTAs — pre-select interest
+  document.querySelectorAll('.offering-cta[data-interest]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      state.interest = btn.dataset.interest;
-      state.step = 2;
-      render();
+      funnel.step = 2; // skip to timeline (interest already known)
+      openFunnel(btn.dataset.interest);
+      refreshFunnel();
     });
   });
 
-  // Step 2: timeline selection — tap immediately advances
+  // Backdrop click closes funnel
+  document.getElementById('funnelOverlay')?.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
+  });
+}
+
+// ─── Funnel events ────────────────────────────────────────────────────────────
+function bindFunnelEvents() {
+  document.getElementById('funnelClose')?.addEventListener('click', closeFunnel);
+
+  document.querySelectorAll('[data-interest]').forEach((btn) => {
+    if (btn.classList.contains('offering-cta')) return;
+    btn.addEventListener('click', () => {
+      funnel.interest = btn.dataset.interest;
+      funnel.step = 2;
+      refreshFunnel();
+    });
+  });
+
   document.querySelectorAll('[data-timeline]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      state.timeline = btn.dataset.timeline;
-      state.step = 3;
-      render();
+      funnel.timeline = btn.dataset.timeline;
+      funnel.step = 3;
+      refreshFunnel();
     });
   });
 
-  // Step 3: contact form submit
-  document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+  document.getElementById('funnelForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('contactName').value.trim();
-    const phone = document.getElementById('contactPhone').value.trim();
+    const name  = document.getElementById('cName')?.value.trim();
+    const phone = document.getElementById('cPhone')?.value.trim();
     if (!name || !phone) return;
-    state.contact.name = name;
-    state.contact.phone = phone;
-    state.contact.bestTime = document.getElementById('contactTime').value;
-    state.step = 'confirm';
-    render();
+    funnel.contact.name     = name;
+    funnel.contact.phone    = phone;
+    funnel.contact.bestTime = document.getElementById('cTime')?.value || 'Anytime';
+    funnel.step = 'confirm';
+    refreshFunnel();
   });
 
-  // Back
-  document.getElementById('stepBack')?.addEventListener('click', () => {
-    if (state.step === 2) state.step = 1;
-    else if (state.step === 3) state.step = 2;
-    render();
+  document.getElementById('funnelBack')?.addEventListener('click', () => {
+    if (funnel.step === 2) funnel.step = 1;
+    else if (funnel.step === 3) funnel.step = 2;
+    refreshFunnel();
   });
+
+  document.getElementById('confirmDone')?.addEventListener('click', closeFunnel);
 }
 
-render();
+// ─── Scroll behaviour ─────────────────────────────────────────────────────────
+function initScrollBehavior() {
+  const nav = document.getElementById('siteNav');
+  const bar = document.getElementById('stickyBar');
+  let heroBottom = 0;
+
+  const hero = document.querySelector('.hero');
+  if (hero) heroBottom = hero.offsetHeight;
+
+  const onScroll = () => {
+    const y = window.scrollY;
+    if (nav)  nav.classList.toggle('scrolled', y > 60);
+    if (bar)  bar.classList.toggle('visible', y > heroBottom * 0.6);
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Intersection observer for fade-up elements
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+}
+
+renderApp();
