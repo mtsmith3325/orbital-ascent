@@ -177,6 +177,8 @@ function renderBrochure() {
     </section>
 
     <section class="close-cta-section">
+      <img class="close-cta-bg" src="/src/images/moon-footer.jpg" alt="" aria-hidden="true">
+      <div class="close-cta-bg-overlay"></div>
       <h2 class="close-cta-headline reveal">Where Will<br>You Be<br>In It?</h2>
       <p class="close-cta-sub reveal stagger-1">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
       <button type="button" class="close-cta-button reveal stagger-2" id="closeCta">Join the Mission →</button>
