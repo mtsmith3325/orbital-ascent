@@ -72,15 +72,20 @@ function renderBrochure() {
     `<button type="button" class="carousel-dot${i === 0 ? ' is-active' : ''}" data-slide="${i}" aria-label="Slide ${i + 1}"></button>`
   ).join('');
 
-  const statsHTML = stats.map((s) => `
-    <div class="stat-cell">
-      <div class="stat-value">${s.value}</div>
+  const statsHTML = stats.map((s, i) => {
+    const match  = s.value.match(/^([\d.]+)(.*)$/);
+    const num    = match ? match[1] : s.value;
+    const suffix = match ? match[2] : '';
+    return `
+    <div class="stat-cell reveal stagger-${i + 1}" data-count="${num}" data-suffix="${suffix}">
+      <div class="stat-value">0${suffix}</div>
       <div class="stat-label">${s.label}</div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 
-  const testimonialsHTML = testimonials.map((t) => `
-    <div class="testimonial fade-up">
+  const testimonialsHTML = testimonials.map((t, i) => `
+    <div class="testimonial reveal stagger-${i + 1}">
       <p class="testimonial-quote">"${t.quote}"</p>
       <p class="testimonial-meta">${t.name}<span>${t.mission}</span></p>
     </div>
@@ -459,6 +464,36 @@ function initScrollBehavior() {
     { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
   );
   document.querySelectorAll('.fade-up, .reveal').forEach((el) => observer.observe(el));
+
+  // Count-up observer — fires once per stat cell
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        counterObserver.unobserve(e.target);
+        const target  = parseFloat(e.target.dataset.count);
+        const suffix  = e.target.dataset.suffix || '';
+        const el      = e.target.querySelector('.stat-value');
+        if (!el || isNaN(target)) return;
+        const isDecimal = String(target).includes('.');
+        const duration  = 1400;
+        const start     = performance.now();
+        function tick(now) {
+          const t = Math.min((now - start) / duration, 1);
+          // ease-out expo
+          const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+          const current = isDecimal
+            ? (eased * target).toFixed(1)
+            : Math.round(eased * target);
+          el.textContent = current + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    },
+    { threshold: 0.3 }
+  );
+  document.querySelectorAll('.stat-cell[data-count]').forEach((el) => counterObserver.observe(el));
 }
 
 renderApp();
