@@ -349,6 +349,7 @@ function bindPageEvents() {
   document.getElementById('funnelOverlay')?.addEventListener('click', (e) => {
     if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
   });
+  initHamburger();
 }
 
 function refreshFunnel() {
@@ -385,6 +386,40 @@ function closeFunnel() {
   }
 }
 
+// ─── Hamburger nav ────────────────────────────────────────────────────────────
+function initHamburger() {
+  const btn      = document.getElementById('navHamburger');
+  const drawer   = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navDrawerBackdrop');
+  if (!btn || !drawer) return;
+
+  function openDrawer() {
+    drawer.classList.add('is-open');
+    backdrop?.classList.add('is-open');
+    btn.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('is-open');
+    backdrop?.classList.remove('is-open');
+    btn.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+  }
+
+  btn.addEventListener('click', () =>
+    drawer.classList.contains('is-open') ? closeDrawer() : openDrawer()
+  );
+  backdrop?.addEventListener('click', closeDrawer);
+
+  // Close drawer on any link click (handles hash navigation)
+  drawer.querySelectorAll('.drawer-link').forEach((link) =>
+    link.addEventListener('click', closeDrawer)
+  );
+}
+
 // ─── Brochure events ──────────────────────────────────────────────────────────
 function bindBrochureEvents() {
   document.getElementById('navCta')?.addEventListener('click', () => openFunnel());
@@ -408,6 +443,7 @@ function bindBrochureEvents() {
 
   initCarousel();
   initTracker();
+  initHamburger();
 
   const video  = document.getElementById('heroVideo');
   const toggle = document.getElementById('heroVideoToggle');
