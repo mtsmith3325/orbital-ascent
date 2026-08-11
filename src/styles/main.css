@@ -120,9 +120,33 @@ body {
 .hero-headline,
 .hero-sub,
 .hero-cta,
-.scroll-hint {
+.scroll-hint,
+.hero-video-toggle {
   position: relative;
   z-index: 2;
+}
+
+.hero-video-toggle {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s, background 0.2s;
+  z-index: 2;
+}
+
+.hero-video-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .hero-eyebrow {

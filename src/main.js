@@ -93,13 +93,22 @@ function renderBrochure() {
     </nav>
 
     <section class="hero">
-      <video class="hero-video" src="/videos/hero-video.mov" autoplay muted loop playsinline></video>
+      <video class="hero-video" id="heroVideo" src="/videos/hero-video.mov" autoplay muted loop playsinline></video>
       <div class="hero-overlay"></div>
       <p class="hero-eyebrow">The Future, Documented</p>
       <h1 class="hero-headline">The Overview<br>Effect.<br>Live It.</h1>
       <p class="hero-sub">Orbital flights, lunar flybys, and extended station residencies for the world's most adventurous travellers.</p>
       <button type="button" class="hero-cta" id="heroCta">Explore the Program →</button>
       <div class="scroll-hint">Scroll</div>
+      <button type="button" class="hero-video-toggle" id="heroVideoToggle" aria-label="Pause video">
+        <svg class="icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="2" width="3.5" height="12" rx="1" stroke="white" stroke-width="2"/>
+          <rect x="9.5" y="2" width="3.5" height="12" rx="1" stroke="white" stroke-width="2"/>
+        </svg>
+        <svg class="icon-play" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
+          <path d="M4 2.5L13 8L4 13.5V2.5Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </section>
 
     <section class="section fade-up" id="missions-heading">
@@ -337,6 +346,18 @@ function bindBrochureEvents() {
   });
 
   initCarousel();
+
+  const video  = document.getElementById('heroVideo');
+  const toggle = document.getElementById('heroVideoToggle');
+  if (video && toggle) {
+    toggle.addEventListener('click', () => {
+      const paused = video.paused;
+      paused ? video.play() : video.pause();
+      toggle.setAttribute('aria-label', paused ? 'Pause video' : 'Play video');
+      toggle.querySelector('.icon-pause').style.display = paused ? '' : 'none';
+      toggle.querySelector('.icon-play').style.display  = paused ? 'none' : '';
+    });
+  }
 }
 
 // ─── Funnel events ────────────────────────────────────────────────────────────
