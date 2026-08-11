@@ -111,30 +111,30 @@ function renderBrochure() {
       </button>
     </section>
 
-    <section class="section fade-up" id="missions-heading">
-      <p class="section-eyebrow">Our Missions</p>
-      <h2 class="section-heading">Three ways to leave the planet.</h2>
+    <section class="section" id="missions-heading">
+      <p class="section-eyebrow reveal">Our Missions</p>
+      <h2 class="section-heading reveal stagger-1">Three ways to leave the planet.</h2>
     </section>
 
-    <section class="carousel-section fade-up" id="offeringsCarousel">
+    <section class="carousel-section" id="offeringsCarousel">
       <div class="carousel-track" id="carouselTrack">
         ${offeringsHTML}
       </div>
-      <div class="carousel-controls">
+      <div class="carousel-controls reveal">
         <button type="button" class="carousel-arrow" id="carouselPrev" aria-label="Previous">←</button>
         <div class="carousel-dots" id="carouselDots">${dotsHTML}</div>
         <button type="button" class="carousel-arrow" id="carouselNext" aria-label="Next">→</button>
       </div>
     </section>
 
-    <section class="stats-section fade-up">
-      <p class="stats-eyebrow">By the Numbers</p>
+    <section class="stats-section">
+      <p class="stats-eyebrow reveal">By the Numbers</p>
       <div class="stats-grid">${statsHTML}</div>
     </section>
 
-    <section class="section fade-up">
-      <p class="section-eyebrow">Mission Alumni</p>
-      <h2 class="section-heading">In their own words.</h2>
+    <section class="section">
+      <p class="section-eyebrow reveal">Mission Alumni</p>
+      <h2 class="section-heading reveal stagger-1">In their own words.</h2>
     </section>
 
     <section class="testimonials-section">
@@ -143,10 +143,10 @@ function renderBrochure() {
       </div>
     </section>
 
-    <section class="close-cta-section fade-up">
-      <h2 class="close-cta-headline">Where Will<br>You Be<br>In It?</h2>
-      <p class="close-cta-sub">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
-      <button type="button" class="close-cta-button" id="closeCta">Join the Mission →</button>
+    <section class="close-cta-section">
+      <h2 class="close-cta-headline reveal">Where Will<br>You Be<br>In It?</h2>
+      <p class="close-cta-sub reveal stagger-1">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
+      <button type="button" class="close-cta-button reveal stagger-2" id="closeCta">Join the Mission →</button>
     </section>
 
     <footer class="site-footer">© 2026 Orbital Ascent. All missions are fictional — for demonstration purposes only.</footer>
@@ -456,9 +456,9 @@ function initScrollBehavior() {
 
   const observer = new IntersectionObserver(
     (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in-view'); }),
-    { threshold: 0.12 }
+    { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
   );
-  document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+  document.querySelectorAll('.fade-up, .reveal').forEach((el) => observer.observe(el));
 }
 
 renderApp();
