@@ -1,5 +1,8 @@
 import '/src/styles/main.css';
 import { offerings, stats, testimonials, interestOptions, timelineOptions, bestTimeOptions, packages, agents } from './data/packages.js';
+import { renderNav } from './lib/nav.js';
+import { renderExperience } from './pages/experience.js';
+import { renderJourney } from './pages/journey.js';
 
 // ─── Starfield ──────────────────────────────────────────────────────────────
 (function initStarfield() {
@@ -85,10 +88,7 @@ function renderBrochure() {
   }).join('');
 
   return `
-    <nav class="site-nav" id="siteNav">
-      <a href="#" class="nav-logo">Orbital<span> Ascent</span></a>
-      <button type="button" class="nav-cta" id="navCta">Join the List</button>
-    </nav>
+    ${renderNav('home')}
 
     <section class="hero">
       <video class="hero-video" id="heroVideo" src="/videos/hero-video.mov" autoplay muted loop playsinline></video>
@@ -317,10 +317,36 @@ function renderFunnelOverlay() {
 
 // ─── Render ───────────────────────────────────────────────────────────────────
 function renderApp() {
-  document.getElementById('app').innerHTML = renderBrochure() + renderFunnelOverlay();
-  bindBrochureEvents();
-  bindFunnelEvents();
-  initScrollBehavior();
+  const route = window.location.hash.replace('#', '') || 'home';
+  const app   = document.getElementById('app');
+
+  if (route === 'experience') {
+    app.innerHTML = renderExperience() + renderFunnelOverlay();
+    bindPageEvents();
+    bindFunnelEvents();
+    initScrollBehavior();
+  } else if (route === 'journey') {
+    app.innerHTML = renderJourney() + renderFunnelOverlay();
+    bindPageEvents();
+    bindFunnelEvents();
+    initScrollBehavior();
+  } else {
+    app.innerHTML = renderBrochure() + renderFunnelOverlay();
+    bindBrochureEvents();
+    bindFunnelEvents();
+    initScrollBehavior();
+  }
+  window.scrollTo(0, 0);
+}
+
+// ─── Inner-page events ────────────────────────────────────────────────────────
+function bindPageEvents() {
+  document.getElementById('navCta')?.addEventListener('click', () => openFunnel());
+  document.getElementById('pageCtaBtn')?.addEventListener('click', () => openFunnel());
+  document.getElementById('stickyBarBtn')?.addEventListener('click', () => openFunnel());
+  document.getElementById('funnelOverlay')?.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
+  });
 }
 
 function refreshFunnel() {
@@ -587,4 +613,5 @@ function initScrollBehavior() {
   document.querySelectorAll('.stat-cell[data-count]').forEach((el) => counterObserver.observe(el));
 }
 
+window.addEventListener('hashchange', renderApp);
 renderApp();

@@ -86,6 +86,165 @@ body {
 
 .nav-cta:hover { background: var(--warm-white); color: var(--black); border-color: var(--warm-white); }
 
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-link {
+  font-family: var(--ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--silver);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-link:hover   { color: var(--warm-white); }
+.nav-link.is-active { color: var(--warm-white); border-bottom: 1px solid var(--amber); padding-bottom: 1px; }
+
+/* ─── PAGE HERO ──────────────────────────────────────────────────────────── */
+.page-hero {
+  padding: 9rem 1.5rem 4rem;
+  border-bottom: 1px solid rgba(183, 183, 172, 0.12);
+}
+
+.page-hero-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1rem;
+}
+
+.page-hero-headline {
+  font-family: var(--display);
+  font-size: clamp(3rem, 14vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  margin-bottom: 1.5rem;
+}
+
+.page-hero-sub {
+  font-size: 0.9rem;
+  color: var(--gray);
+  max-width: 340px;
+  line-height: 1.75;
+}
+
+/* ─── EDITORIAL (Experience page) ───────────────────────────────────────── */
+.page-editorial {
+  padding: 0 1.5rem;
+}
+
+.editorial-block {
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(183, 183, 172, 0.1);
+}
+
+.editorial-num {
+  font-family: var(--display);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+}
+
+.editorial-headline {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 8vw, 3rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  margin-bottom: 1.25rem;
+  line-height: 1;
+}
+
+.editorial-body {
+  font-size: 0.9rem;
+  color: var(--silver);
+  line-height: 1.85;
+  max-width: 600px;
+}
+
+/* ─── JOURNEY STEPS (Journey page) ──────────────────────────────────────── */
+.page-journey-steps {
+  padding: 0 1.5rem;
+}
+
+.journey-step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 0 1.25rem;
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(183, 183, 172, 0.1);
+}
+
+.journey-step-num {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  padding-top: 0.2rem;
+}
+
+.journey-step-title {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 7vw, 2.5rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.journey-step-body {
+  font-size: 0.9rem;
+  color: var(--silver);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+  max-width: 560px;
+}
+
+.journey-step-meta {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* ─── PAGE CTA ───────────────────────────────────────────────────────────── */
+.page-cta-section {
+  padding: 5rem 1.5rem calc(7rem + var(--safe-b));
+  border-top: 1px solid rgba(183, 183, 172, 0.12);
+}
+
+.page-cta-headline {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 11vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  margin-bottom: 1.5rem;
+}
+
+.page-cta-sub {
+  font-size: 0.88rem;
+  color: var(--gray);
+  max-width: 320px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
 /* ─── HERO ───────────────────────────────────────────────────────────────── */
 .hero {
   min-height: 100vh;
