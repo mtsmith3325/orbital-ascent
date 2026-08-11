@@ -488,38 +488,134 @@ body {
   line-height: 1.5;
 }
 
-/* ─── TESTIMONIALS ───────────────────────────────────────────────────────── */
-.testimonials-section {
-  padding: 4rem 1.5rem 5rem;
-}
-
-.testimonials-inner {
-  display: flex;
-  flex-direction: column;
-}
-
-.testimonial {
-  padding: 1.75rem 0;
+/* ─── TRACKER ────────────────────────────────────────────────────────────── */
+.tracker-section {
+  padding: 3rem 1.5rem;
+  border-top: 1px solid rgba(183, 183, 172, 0.12);
   border-bottom: 1px solid rgba(183, 183, 172, 0.12);
 }
 
-.testimonial-quote {
-  font-size: 0.95rem;
-  color: var(--warm-white);
-  line-height: 1.75;
-  margin-bottom: 0.75rem;
+.tracker-panel {
+  background: var(--graphite);
+  border: 1px solid rgba(183, 183, 172, 0.15);
+  border-radius: var(--radius);
+  padding: 1.5rem;
 }
 
-.testimonial-meta {
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
+.tracker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.tracker-mission-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+.tracker-live {
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.tracker-visual {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.tracker-arc-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.tracker-arc-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.tracker-endpoint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  padding-bottom: 0.5rem;
+}
+
+.tracker-body {
+  border-radius: 50%;
+}
+
+.tracker-body--earth {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 35% 35%, #3b6e9a, #1a3d5c);
+}
+
+.tracker-body--moon {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 35% 35%, #B7B7AC, #6e6e68);
+}
+
+.tracker-body-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gray);
-  display: flex;
-  gap: 1rem;
 }
 
-.testimonial-meta span { color: var(--amber); }
+.tracker-telemetry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 1rem;
+  border-top: 1px solid rgba(183, 183, 172, 0.1);
+  padding-top: 1.25rem;
+}
+
+.tracker-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tracker-stat-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.tracker-stat-value {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  color: var(--warm-white);
+  line-height: 1;
+}
+
+.tracker-stat-value--phase {
+  font-family: var(--ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--amber);
+}
+
+.tracker-stat-unit {
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
 
 /* ─── CLOSING CTA ────────────────────────────────────────────────────────── */
 .close-cta-section {

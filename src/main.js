@@ -84,13 +84,6 @@ function renderBrochure() {
   `;
   }).join('');
 
-  const testimonialsHTML = testimonials.map((t, i) => `
-    <div class="testimonial reveal stagger-${i + 1}">
-      <p class="testimonial-quote">"${t.quote}"</p>
-      <p class="testimonial-meta">${t.name}<span>${t.mission}</span></p>
-    </div>
-  `).join('');
-
   return `
     <nav class="site-nav" id="siteNav">
       <a href="#" class="nav-logo">Orbital<span> Ascent</span></a>
@@ -137,14 +130,49 @@ function renderBrochure() {
       <div class="stats-grid">${statsHTML}</div>
     </section>
 
-    <section class="section">
-      <p class="section-eyebrow reveal">Mission Alumni</p>
-      <h2 class="section-heading reveal stagger-1">In their own words.</h2>
-    </section>
-
-    <section class="testimonials-section">
-      <div class="testimonials-inner">
-        ${testimonialsHTML}
+    <section class="tracker-section reveal">
+      <div class="tracker-panel">
+        <div class="tracker-header">
+          <span class="tracker-mission-label">ACTIVE MISSION · ARTEMIS CHARTER 04</span>
+          <span class="tracker-live">● LIVE</span>
+        </div>
+        <div class="tracker-visual" aria-hidden="true">
+          <div class="tracker-endpoint">
+            <div class="tracker-body tracker-body--earth"></div>
+            <span class="tracker-body-label">EARTH</span>
+          </div>
+          <div class="tracker-arc-wrap">
+            <svg class="tracker-arc-svg" viewBox="0 0 400 110" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+              <path id="trackerArcPath" d="M 20,90 Q 200,-10 380,90" fill="none" stroke="#858782" stroke-width="1" stroke-dasharray="6 5"/>
+              <circle id="trackerMarker" r="4.5" fill="#C8A96B"/>
+            </svg>
+          </div>
+          <div class="tracker-endpoint">
+            <div class="tracker-body tracker-body--moon"></div>
+            <span class="tracker-body-label">MOON</span>
+          </div>
+        </div>
+        <div class="tracker-telemetry">
+          <div class="tracker-stat">
+            <span class="tracker-stat-label">DISTANCE REMAINING</span>
+            <span class="tracker-stat-value" id="trackerDistance">—</span>
+            <span class="tracker-stat-unit">KM</span>
+          </div>
+          <div class="tracker-stat">
+            <span class="tracker-stat-label">VELOCITY</span>
+            <span class="tracker-stat-value" id="trackerVelocity">—</span>
+            <span class="tracker-stat-unit">KM/H</span>
+          </div>
+          <div class="tracker-stat">
+            <span class="tracker-stat-label">ELAPSED TIME</span>
+            <span class="tracker-stat-value" id="trackerElapsed">—</span>
+            <span class="tracker-stat-unit">H:MM</span>
+          </div>
+          <div class="tracker-stat">
+            <span class="tracker-stat-label">CURRENT PHASE</span>
+            <span class="tracker-stat-value tracker-stat-value--phase" id="trackerPhase">—</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -351,6 +379,7 @@ function bindBrochureEvents() {
   });
 
   initCarousel();
+  initTracker();
 
   const video  = document.getElementById('heroVideo');
   const toggle = document.getElementById('heroVideoToggle');
@@ -441,6 +470,68 @@ function initCarousel() {
   }, { passive: true });
 
   goTo(0);
+}
+
+// ─── Lunar Trajectory Tracker ─────────────────────────────────────────────────
+function initTracker() {
+  const distEl    = document.getElementById('trackerDistance');
+  const velEl     = document.getElementById('trackerVelocity');
+  const elapsedEl = document.getElementById('trackerElapsed');
+  const phaseEl   = document.getElementById('trackerPhase');
+  const marker    = document.getElementById('trackerMarker');
+  const arcPath   = document.getElementById('trackerArcPath');
+
+  if (!distEl) return;
+
+  // Mock state — ~38% through a trans-lunar coast
+  const TOTAL_KM = 372000;
+  let progress   = 0.38;
+  let distance   = Math.round(TOTAL_KM * (1 - progress));
+  let velocity   = 3840;
+  let elapsed    = 62 * 60 + 18; // minutes
+
+  const phases = ['Trans-lunar injection', 'Coast', 'Mid-course correction', 'Lunar approach'];
+  let phaseIdx = 1; // "Coast"
+
+  function positionMarker() {
+    if (!arcPath || !marker) return;
+    const len = arcPath.getTotalLength();
+    const pt  = arcPath.getPointAtLength(len * progress);
+    marker.setAttribute('cx', pt.x);
+    marker.setAttribute('cy', pt.y);
+  }
+
+  function render() {
+    if (distEl)    distEl.textContent  = distance.toLocaleString();
+    if (velEl)     velEl.textContent   = velocity.toLocaleString();
+    if (phaseEl)   phaseEl.textContent = phases[phaseIdx];
+    if (elapsedEl) {
+      const h = Math.floor(elapsed / 60);
+      const m = elapsed % 60;
+      elapsedEl.textContent = `${h}:${String(m).padStart(2, '0')}`;
+    }
+    positionMarker();
+  }
+
+  function tick() {
+    // distance decrements 80–220 km per tick
+    distance = Math.max(0, distance - (Math.floor(Math.random() * 140) + 80));
+    // velocity drifts ±15 km/h
+    velocity = Math.max(3200, Math.min(4400, velocity + Math.round(Math.random() * 30 - 15)));
+    // elapsed advances ~1 min every other tick
+    if (Math.random() > 0.45) elapsed += 1;
+    // marker drifts slowly forward along arc
+    progress = Math.min(0.97, progress + 0.0004 + Math.random() * 0.0003);
+    render();
+  }
+
+  render(); // initial display
+
+  // Jittered tick interval (2.0 – 3.2 s) simulates a real data feed
+  (function schedule() {
+    const delay = 2000 + Math.random() * 1200;
+    setTimeout(() => { tick(); schedule(); }, delay);
+  })();
 }
 
 // ─── Scroll behaviour ─────────────────────────────────────────────────────────
