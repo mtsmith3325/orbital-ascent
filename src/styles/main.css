@@ -683,18 +683,11 @@ body {
   border-bottom: 1px solid rgba(183, 183, 172, 0.12);
 }
 
-.tracker-panel {
-  background: var(--graphite);
-  border: 1px solid rgba(183, 183, 172, 0.15);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-}
-
 .tracker-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .tracker-mission-label {
@@ -711,68 +704,115 @@ body {
   color: var(--amber);
 }
 
-.tracker-visual {
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 1.5rem;
+/* Hero orbital scene */
+.tracker-scene {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--black);
 }
 
-.tracker-arc-wrap {
-  flex: 1;
-  min-width: 0;
+.tracker-scene-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .tracker-arc-svg {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  display: block;
-  overflow: visible;
+  height: 100%;
 }
 
-.tracker-endpoint {
+#trackerMarker {
+  filter: drop-shadow(0 0 6px rgba(200, 169, 107, 0.9));
+}
+
+.tracker-waypoint {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
-  flex-shrink: 0;
-  padding-bottom: 0.5rem;
+  gap: 0.3rem;
+  text-align: center;
 }
 
-.tracker-body {
-  border-radius: 50%;
+.tracker-waypoint-leg {
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--silver);
 }
 
-.tracker-body--earth {
-  width: 18px;
-  height: 18px;
-  background: radial-gradient(circle at 35% 35%, #3b6e9a, #1a3d5c);
+.tracker-waypoint-status {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--amber);
 }
 
-.tracker-body--moon {
-  width: 14px;
-  height: 14px;
-  background: radial-gradient(circle at 35% 35%, #B7B7AC, #6e6e68);
+.tracker-endpoint {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tracker-endpoint--earth {
+  left: 5%;
+  bottom: 8%;
+}
+
+.tracker-endpoint--moon {
+  right: 6%;
+  top: 22%;
+  text-align: right;
+  align-items: flex-end;
 }
 
 .tracker-body-label {
-  font-size: 0.5rem;
+  font-size: 0.55rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gray);
+  color: var(--warm-white);
 }
 
-.tracker-telemetry {
+.tracker-coords {
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  color: var(--silver);
+}
+
+/* Telemetry panel — stacked card below the scene on mobile */
+.tracker-panel {
+  background: var(--graphite);
+  border: 1px solid rgba(183, 183, 172, 0.15);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-top: -1px;
+  position: relative;
+}
+
+.tracker-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem 1rem;
-  border-top: 1px solid rgba(183, 183, 172, 0.1);
-  padding-top: 1.25rem;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
 }
 
 .tracker-stat {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.3rem;
 }
 
 .tracker-stat-label {
@@ -803,6 +843,134 @@ body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gray);
+  margin-top: -0.15rem;
+}
+
+.tracker-bar {
+  height: 2px;
+  background: rgba(183, 183, 172, 0.15);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.tracker-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--amber);
+  transition: width 900ms ease;
+}
+
+.tracker-bar-max {
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* Mission phase stepper */
+.tracker-stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-top: 0.15rem;
+}
+
+.tracker-step {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.tracker-step-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(183, 183, 172, 0.3);
+}
+
+.tracker-step-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.tracker-step.is-active .tracker-step-dot { background: var(--amber); }
+.tracker-step.is-active .tracker-step-label { color: var(--amber); }
+
+.tracker-rocket {
+  display: none;
+}
+
+/* Secondary footer row */
+.tracker-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(183, 183, 172, 0.1);
+}
+
+.tracker-footer-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tracker-footer-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.tracker-footer-value {
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--silver);
+}
+
+@media (min-width: 640px) {
+  .tracker-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tracker-panel {
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    background: rgba(17, 20, 18, 0.82);
+    backdrop-filter: blur(6px);
+    padding: 1.5rem 1.75rem;
+  }
+
+  .tracker-scene {
+    position: relative;
+  }
+
+  .tracker-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+    padding-right: 7rem;
+  }
+
+  .tracker-rocket {
+    display: block;
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    width: 6rem;
+    height: auto;
+  }
+
+  .tracker-footer {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
 }
 
 /* ─── CLOSING CTA ────────────────────────────────────────────────────────── */

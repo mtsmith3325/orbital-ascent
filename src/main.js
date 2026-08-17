@@ -133,53 +133,85 @@ function renderBrochure() {
     </section>
 
     <section class="tracker-section reveal">
+      <div class="tracker-header">
+        <span class="tracker-mission-label">ACTIVE MISSION · ARTEMIS CHARTER 04</span>
+        <span class="tracker-live">● LIVE</span>
+      </div>
+
+      <div class="tracker-scene">
+        <img class="tracker-scene-bg" src="/src/images/lunar-tracker/lunartracker-bg.jpg" alt="" aria-hidden="true">
+
+        <svg class="tracker-arc-svg" viewBox="0 0 1672 941" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path id="trackerArcPath" d="M 560,470 Q 1010,80 1460,290" fill="none" stroke="#B7B7AC" stroke-width="3" stroke-dasharray="14 11" opacity="0.7"/>
+          <circle id="trackerMarker" r="10" fill="#C8A96B"/>
+        </svg>
+
+        <div class="tracker-waypoint" id="trackerWaypoint">
+          <span class="tracker-waypoint-leg" id="trackerWaypointLeg">TRAJECTORY: COAST</span>
+          <span class="tracker-waypoint-status">ON COURSE</span>
+        </div>
+
+        <div class="tracker-endpoint tracker-endpoint--earth">
+          <span class="tracker-body-label">EARTH</span>
+          <span class="tracker-coords">34.05°N 118.24°W</span>
+        </div>
+        <div class="tracker-endpoint tracker-endpoint--moon">
+          <span class="tracker-body-label">MOON</span>
+          <span class="tracker-coords">0.67°N 23.47°E</span>
+        </div>
+      </div>
+
       <div class="tracker-panel">
-        <div class="tracker-header">
-          <span class="tracker-mission-label">ACTIVE MISSION · ARTEMIS CHARTER 04</span>
-          <span class="tracker-live">● LIVE</span>
-        </div>
-        <div class="tracker-visual" aria-hidden="true">
-          <div class="tracker-endpoint">
-            <div class="tracker-body tracker-body--earth"></div>
-            <span class="tracker-body-label">EARTH</span>
-          </div>
-          <div class="tracker-arc-wrap">
-            <svg class="tracker-arc-svg" viewBox="0 0 400 110" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-              <path id="trackerArcPath" d="M 20,90 Q 200,-10 380,90" fill="none" stroke="#858782" stroke-width="1" stroke-dasharray="6 5"/>
-              <circle id="trackerMarker" r="4.5" fill="#C8A96B"/>
-            </svg>
-          </div>
-          <div class="tracker-endpoint">
-            <div class="tracker-body tracker-body--moon"></div>
-            <span class="tracker-body-label">MOON</span>
-          </div>
-        </div>
-        <div class="tracker-telemetry">
+        <div class="tracker-stats">
           <div class="tracker-stat">
             <span class="tracker-stat-label">DISTANCE REMAINING</span>
             <span class="tracker-stat-value" id="trackerDistance">—</span>
             <span class="tracker-stat-unit">KM</span>
+            <div class="tracker-bar"><span class="tracker-bar-fill" id="trackerDistanceBar"></span></div>
+            <span class="tracker-bar-max">TOTAL 372,000 KM</span>
           </div>
           <div class="tracker-stat">
             <span class="tracker-stat-label">VELOCITY</span>
             <span class="tracker-stat-value" id="trackerVelocity">—</span>
             <span class="tracker-stat-unit">KM/H</span>
+            <div class="tracker-bar"><span class="tracker-bar-fill" id="trackerVelocityBar"></span></div>
+            <span class="tracker-bar-max">MAX 4,400 KM/H</span>
           </div>
           <div class="tracker-stat">
             <span class="tracker-stat-label">ELAPSED TIME</span>
             <span class="tracker-stat-value" id="trackerElapsed">—</span>
             <span class="tracker-stat-unit">H:MM</span>
+            <div class="tracker-bar"><span class="tracker-bar-fill" id="trackerElapsedBar"></span></div>
+            <span class="tracker-bar-max">EST. 72:00</span>
           </div>
-          <div class="tracker-stat">
+          <div class="tracker-stat tracker-stat--phase">
             <span class="tracker-stat-label">CURRENT PHASE</span>
             <span class="tracker-stat-value tracker-stat-value--phase" id="trackerPhase">—</span>
+            <div class="tracker-stepper" id="trackerStepper">
+              ${['Launch', 'Ascent', 'TLI', 'Coast', 'Approach', 'Landing'].map((label) => `
+                <span class="tracker-step" data-phase="${label}">
+                  <span class="tracker-step-dot"></span>
+                  <span class="tracker-step-label">${label}</span>
+                </span>
+              `).join('')}
+            </div>
           </div>
+        </div>
+
+        <img class="tracker-rocket" src="/src/images/lunar-tracker/spaceship.png" alt="" aria-hidden="true">
+
+        <div class="tracker-footer">
+          <div class="tracker-footer-item"><span class="tracker-footer-label">VECTOR</span><span class="tracker-footer-value">062.4° AZ</span></div>
+          <div class="tracker-footer-item"><span class="tracker-footer-label">ALTITUDE</span><span class="tracker-footer-value">1,204 KM</span></div>
+          <div class="tracker-footer-item"><span class="tracker-footer-label">SYSTEMS</span><span class="tracker-footer-value">NOMINAL</span></div>
+          <div class="tracker-footer-item"><span class="tracker-footer-label">CREW</span><span class="tracker-footer-value">4</span></div>
+          <div class="tracker-footer-item"><span class="tracker-footer-label">VESSEL</span><span class="tracker-footer-value">ARTEMIS IV</span></div>
         </div>
       </div>
     </section>
 
     <section class="close-cta-section">
-      <img class="close-cta-bg" src="/src/images/moon-footer.jpg" alt="" aria-hidden="true">
+      <img class="close-cta-bg" src="/src/images/moon-footer.png" alt="" aria-hidden="true">
       <div class="close-cta-bg-overlay"></div>
       <h2 class="close-cta-headline reveal">Where Will<br>You Be<br>In It?</h2>
       <p class="close-cta-sub reveal stagger-1">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
@@ -540,24 +572,31 @@ function initCarousel() {
 
 // ─── Lunar Trajectory Tracker ─────────────────────────────────────────────────
 function initTracker() {
-  const distEl    = document.getElementById('trackerDistance');
-  const velEl     = document.getElementById('trackerVelocity');
-  const elapsedEl = document.getElementById('trackerElapsed');
-  const phaseEl   = document.getElementById('trackerPhase');
-  const marker    = document.getElementById('trackerMarker');
-  const arcPath   = document.getElementById('trackerArcPath');
+  const distEl     = document.getElementById('trackerDistance');
+  const velEl      = document.getElementById('trackerVelocity');
+  const elapsedEl  = document.getElementById('trackerElapsed');
+  const phaseEl    = document.getElementById('trackerPhase');
+  const marker     = document.getElementById('trackerMarker');
+  const arcPath    = document.getElementById('trackerArcPath');
+  const distBar    = document.getElementById('trackerDistanceBar');
+  const velBar     = document.getElementById('trackerVelocityBar');
+  const elapsedBar = document.getElementById('trackerElapsedBar');
+  const waypointLeg = document.getElementById('trackerWaypointLeg');
+  const steps      = document.querySelectorAll('#trackerStepper .tracker-step');
 
   if (!distEl) return;
 
   // Mock state — ~38% through a trans-lunar coast
-  const TOTAL_KM = 372000;
-  let progress   = 0.38;
-  let distance   = Math.round(TOTAL_KM * (1 - progress));
-  let velocity   = 3840;
-  let elapsed    = 62 * 60 + 18; // minutes
+  const TOTAL_KM   = 372000;
+  const MAX_KMH    = 4400;
+  const EST_MIN    = 72 * 60;
+  let progress     = 0.38;
+  let distance     = Math.round(TOTAL_KM * (1 - progress));
+  let velocity     = 3840;
+  let elapsed      = 62 * 60 + 18; // minutes
 
-  const phases = ['Trans-lunar injection', 'Coast', 'Mid-course correction', 'Lunar approach'];
-  let phaseIdx = 1; // "Coast"
+  const phases = ['Launch', 'Ascent', 'TLI', 'Coast', 'Approach', 'Landing'];
+  let phaseIdx = 3; // "Coast"
 
   function positionMarker() {
     if (!arcPath || !marker) return;
@@ -571,11 +610,16 @@ function initTracker() {
     if (distEl)    distEl.textContent  = distance.toLocaleString();
     if (velEl)     velEl.textContent   = velocity.toLocaleString();
     if (phaseEl)   phaseEl.textContent = phases[phaseIdx];
+    if (waypointLeg) waypointLeg.textContent = `TRAJECTORY: ${phases[phaseIdx].toUpperCase()}`;
     if (elapsedEl) {
       const h = Math.floor(elapsed / 60);
       const m = elapsed % 60;
       elapsedEl.textContent = `${h}:${String(m).padStart(2, '0')}`;
     }
+    if (distBar)    distBar.style.width    = `${Math.round(progress * 100)}%`;
+    if (velBar)     velBar.style.width     = `${Math.round((velocity / MAX_KMH) * 100)}%`;
+    if (elapsedBar) elapsedBar.style.width = `${Math.min(100, Math.round((elapsed / EST_MIN) * 100))}%`;
+    steps.forEach((step, i) => step.classList.toggle('is-active', i === phaseIdx));
     positionMarker();
   }
 
