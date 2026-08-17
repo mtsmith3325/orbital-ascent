@@ -29,7 +29,7 @@ Wealthy, self-funded adventure-seeker, already convinced experiences are worth p
 - [ ] Implement the Lunar Trajectory Tracker as real component code (see `docs/features/lunar-trajectory-tracker.md`) — spec approved, not yet built
 
 ## Known secondary features
-- **Lunar Trajectory Tracker** — mock live mission-telemetry widget, embedded mid-scroll between brochure sections. Full spec: `docs/features/lunar-trajectory-tracker.md`. Build as its own component in `src/components/` when implementation starts; keep it visually and behaviorally scoped to that spec — it is a surprise moment, not a dashboard.
+- **Lunar Trajectory Tracker** — full mission-console widget (hero orbital scene, telemetry panel with progress bars, mission stepper, rocket render, telemetry footer row), embedded mid-scroll between brochure sections at full size — not a minimized teaser. Full spec: `docs/features/lunar-trajectory-tracker.md`. Implementation prompt: `docs/prompts/rocket-tracker-visual-upgrade-prompt.md`. Build as its own component in `src/components/`.
 
 ## Session log
 See `.claude/memory/decisions.md` for a running log of decisions and progress across sessions. Update it at the end of each working session — this is part of the P303 grading criteria (scaffolding should show real progress over time, not be written once and abandoned).

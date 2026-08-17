@@ -85,3 +85,38 @@ A running log of key decisions and progress, updated each session. Keeping this 
 - Lock tech stack (still outstanding from Session 3)
 - Draft brochure section content — needed before final placement of the tracker can be confirmed
 - When ready, implement the tracker as a real component per its spec
+
+---
+
+## Session 5 — [date]
+**Status:** Tracker visual spec significantly expanded based on a new reference mockup. `docs/prompts/rocket-tracker-visual-upgrade-prompt.md` added.
+
+**Decision made:**
+- The Lunar Trajectory Tracker is growing beyond the original "compact, small footprint" spec from Session 4. New reference design ("desired.png") calls for: full hero background imagery (Earth/Moon photographic scene), a waypoint/trajectory-status label on the arc, coordinate readouts under Earth/Moon markers, progress bars under primary stats, a 6-stage mission phase stepper, a rocket render, and a secondary telemetry footer row (vector, altitude, systems, crew, vessel).
+- Wrote a detailed implementation prompt (for use in VS Code / Claude Sonnet 5) to bring the live component in line with this new reference.
+
+**⚠️ Open tension flagged, not yet resolved:** This is now a much richer "mission console" than the original "surprise moment, not a full feature" framing in `docs/features/lunar-trajectory-tracker.md`. Need to decide: does this become the new spec (replacing "compact"), or should a smaller version persist for the homepage while this richer version lives elsewhere (e.g. its own page)? `docs/features/lunar-trajectory-tracker.md` has NOT been updated yet to reflect this — it still describes the smaller version. Do not treat that file as current without reconciling it against this session's decision first.
+
+**Next session should:**
+- Resolve the tension above — decide if the compact spec is superseded or if there are now two tracker treatments
+- Update `docs/features/lunar-trajectory-tracker.md` to match whichever direction is chosen
+- Confirm responsive/mobile behavior once implemented, since the reference design is desktop-proportioned and this is a mobile-first site
+
+---
+
+## Session 6 — [date]
+**Status:** Scope tension from Session 5 resolved. `docs/features/lunar-trajectory-tracker.md` rewritten to match the full mission-console design; `.claude/context.md` updated to remove the outdated warning.
+
+**Decision made:**
+- The full mission-console tracker design (hero imagery, waypoint label, coordinate readouts, progress bars, phase stepper, rocket render, telemetry footer row) **replaces** the original compact spec entirely. There is one tracker, at full size, wherever it appears in the scroll — not a compact version plus a separate full version.
+
+**Why:** Simpler to build and maintain one canonical version; the richness of the console design is what makes it a strong "surprise moment" in the first place, so shrinking it would undercut the feature's own reason for existing.
+
+**Impact on scope:**
+- `docs/features/lunar-trajectory-tracker.md` is now fully aligned with `docs/prompts/rocket-tracker-visual-upgrade-prompt.md` — no more conflicting specs in the repo
+- Responsiveness work is now a real, non-trivial task (stacking 4 stat columns, handling the rocket render and footer row on small screens) since the full console is desktop-proportioned by nature
+
+**Next session should:**
+- Lock tech stack (still outstanding from Session 3)
+- Draft brochure section content — needed before final placement of the tracker can be confirmed
+- Implement the tracker component per the now-unified spec, running the implementation prompt in VS Code

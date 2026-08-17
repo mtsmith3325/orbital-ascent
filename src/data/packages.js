@@ -11,6 +11,7 @@ export const offerings = [
     altitude: '400 km',
     price: 'from $450,000',
     video: null,
+    image: '/src/images/carousel/c-1-image.png',
     included: [
       'Pre-flight medical clearance and physical training',
       'Private pressurized cabin with panoramic viewport',
@@ -29,6 +30,7 @@ export const offerings = [
     altitude: '384,000 km',
     price: 'from $2.8M',
     video: null,
+    image: '/src/images/carousel/c-2-image.png',
     included: [
       'Private berthing module aboard the transit vehicle',
       'Lunar flyby at 100 km — unobstructed surface views',
@@ -47,6 +49,7 @@ export const offerings = [
     altitude: '420 km',
     price: 'from $1.2M/wk',
     video: null,
+    image: '/src/images/carousel/c-3-image.png',
     included: [
       'Private quarters module with viewport',
       'Full zero-g orientation training (2-day pre-mission)',

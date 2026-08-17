@@ -331,16 +331,14 @@ body {
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
   pointer-events: none;
 }
 
-.hero-eyebrow,
 .hero-headline,
 .hero-sub,
 .hero-cta,
-.scroll-hint,
 .hero-video-toggle {
   position: relative;
   z-index: 2;
@@ -367,14 +365,6 @@ body {
 .hero-video-toggle:hover {
   border-color: rgba(255, 255, 255, 0.9);
   background: rgba(255, 255, 255, 0.08);
-}
-
-.hero-eyebrow {
-  font-size: 0.65rem;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--amber);
-  margin-bottom: 1rem;
 }
 
 .hero-headline {
@@ -415,28 +405,6 @@ body {
 
 .hero-cta:hover  { background: var(--amber); }
 .hero-cta:active { transform: scale(0.97); }
-
-.scroll-hint {
-  position: absolute;
-  bottom: 1.75rem;
-  left: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--gray);
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0.45;
-}
-
-.scroll-hint::after {
-  content: '';
-  display: block;
-  width: 28px;
-  height: 1px;
-  background: var(--gray);
-}
 
 /* ─── SECTION SHELL ─────────────────────────────────────────────────────── */
 .section {
@@ -515,7 +483,8 @@ body {
   z-index: 1;
 }
 
-.offering-photo video {
+.offering-photo video,
+.offering-photo img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -624,8 +593,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem 1.75rem;
-  border-top: 1px solid rgba(183, 183, 172, 0.1);
+  margin-bottom: 1.5rem;
 }
 
 .carousel-arrow {

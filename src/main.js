@@ -39,13 +39,26 @@ let funnel = {
 
 // ─── Brochure HTML ─────────────────────────────────────────────────────────────
 function renderBrochure() {
+  const dotsHTML = offerings.map((_, i) =>
+    `<button type="button" class="carousel-dot${i === 0 ? ' is-active' : ''}" data-slide="${i}" aria-label="Slide ${i + 1}"></button>`
+  ).join('');
+
+  const controlsHTML = `
+    <div class="carousel-controls">
+      <button type="button" class="carousel-arrow carousel-prev" aria-label="Previous">←</button>
+      <div class="carousel-dots">${dotsHTML}</div>
+      <button type="button" class="carousel-arrow carousel-next" aria-label="Next">→</button>
+    </div>
+  `;
+
   const offeringsHTML = offerings.map((o, i) => `
     <div class="offering" id="offering-${o.id}" data-index="${i}">
       <div class="offering-inner">
         <p class="offering-num">0${i + 1}</p>
         <div class="offering-photo" data-label="${o.name}">
-          ${o.video ? `<video src="${o.video}" autoplay muted loop playsinline></video>` : ''}
+          ${o.video ? `<video src="${o.video}" autoplay muted loop playsinline></video>` : o.image ? `<img src="${o.image}" alt="" />` : ''}
         </div>
+        ${controlsHTML}
         <h2 class="offering-name">${o.name}</h2>
         <p class="offering-tagline">${o.tagline}</p>
         <p class="offering-feel">${o.feel}</p>
@@ -71,10 +84,6 @@ function renderBrochure() {
     </div>
   `).join('');
 
-  const dotsHTML = offerings.map((_, i) =>
-    `<button type="button" class="carousel-dot${i === 0 ? ' is-active' : ''}" data-slide="${i}" aria-label="Slide ${i + 1}"></button>`
-  ).join('');
-
   const statsHTML = stats.map((s, i) => {
     const match  = s.value.match(/^([\d.]+)(.*)$/);
     const num    = match ? match[1] : s.value;
@@ -91,13 +100,11 @@ function renderBrochure() {
     ${renderNav('home')}
 
     <section class="hero">
-      <video class="hero-video" id="heroVideo" src="/videos/hero-video.mov" autoplay muted loop playsinline></video>
+      <video class="hero-video" id="heroVideo" src="/videos/hero-video-seq.mp4" autoplay muted loop playsinline></video>
       <div class="hero-overlay"></div>
-      <p class="hero-eyebrow">The Future, Documented</p>
       <h1 class="hero-headline">The Overview<br>Effect.<br>Live It.</h1>
       <p class="hero-sub">Orbital flights, lunar flybys, and extended station residencies for the world's most adventurous travellers.</p>
       <button type="button" class="hero-cta" id="heroCta">Explore the Program →</button>
-      <div class="scroll-hint">Scroll</div>
       <button type="button" class="hero-video-toggle" id="heroVideoToggle" aria-label="Pause video">
         <svg class="icon-pause" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="3" y="2" width="3.5" height="12" rx="1" stroke="white" stroke-width="2"/>
@@ -117,11 +124,6 @@ function renderBrochure() {
     <section class="carousel-section" id="offeringsCarousel">
       <div class="carousel-track" id="carouselTrack">
         ${offeringsHTML}
-      </div>
-      <div class="carousel-controls reveal">
-        <button type="button" class="carousel-arrow" id="carouselPrev" aria-label="Previous">←</button>
-        <div class="carousel-dots" id="carouselDots">${dotsHTML}</div>
-        <button type="button" class="carousel-arrow" id="carouselNext" aria-label="Next">→</button>
       </div>
     </section>
 
@@ -503,9 +505,9 @@ function bindFunnelEvents() {
 // ─── Carousel ─────────────────────────────────────────────────────────────────
 function initCarousel() {
   const track = document.getElementById('carouselTrack');
-  const prev  = document.getElementById('carouselPrev');
-  const next  = document.getElementById('carouselNext');
-  const dots  = document.querySelectorAll('.carousel-dot');
+  const prevButtons = document.querySelectorAll('.carousel-prev');
+  const nextButtons = document.querySelectorAll('.carousel-next');
+  const dots = document.querySelectorAll('.carousel-dot');
   if (!track) return;
 
   let current = 0;
@@ -514,13 +516,13 @@ function initCarousel() {
   function goTo(index) {
     current = Math.max(0, Math.min(count - 1, index));
     track.scrollTo({ left: track.offsetWidth * current, behavior: 'smooth' });
-    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
-    if (prev) prev.classList.toggle('is-disabled', current === 0);
-    if (next) next.classList.toggle('is-disabled', current === count - 1);
+    dots.forEach((d) => d.classList.toggle('is-active', Number(d.dataset.slide) === current));
+    prevButtons.forEach((b) => b.classList.toggle('is-disabled', current === 0));
+    nextButtons.forEach((b) => b.classList.toggle('is-disabled', current === count - 1));
   }
 
-  prev?.addEventListener('click', () => goTo(current - 1));
-  next?.addEventListener('click', () => goTo(current + 1));
+  prevButtons.forEach((b) => b.addEventListener('click', () => goTo(current - 1)));
+  nextButtons.forEach((b) => b.addEventListener('click', () => goTo(current + 1)));
   dots.forEach((d) => d.addEventListener('click', () => goTo(Number(d.dataset.slide))));
 
   // Sync dots when user drag-scrolls
