@@ -12,6 +12,7 @@
   --amber-light: #D4B47A;
   --display:     'Bebas Neue', 'Arial Narrow', Arial, sans-serif;
   --ui:          'Inter', system-ui, sans-serif;
+  --mono:        'Space Mono', 'IBM Plex Mono', monospace;
   --radius:      3px;
   --safe-b:      env(safe-area-inset-bottom, 0px);
 }
@@ -745,40 +746,74 @@ body {
 }
 
 .tracker-waypoint-leg {
-  font-size: 0.55rem;
-  letter-spacing: 0.18em;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--silver);
 }
 
 .tracker-waypoint-status {
-  font-family: var(--display);
-  font-size: 0.95rem;
-  letter-spacing: 0.06em;
+  position: relative;
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.55em;
+  text-indent: 0.55em;
   text-transform: uppercase;
   color: var(--warm-white);
   padding-bottom: 0.3rem;
-  border-bottom: 1px solid var(--amber);
+}
+
+.tracker-waypoint-status::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 25%;
+  height: 1px;
+  background: var(--amber);
 }
 
 .tracker-endpoint {
   position: absolute;
+  top: 46%;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .tracker-endpoint--earth {
-  left: 5%;
-  bottom: 8%;
+  left: 3%;
 }
 
 .tracker-endpoint--moon {
-  right: 6%;
-  top: 22%;
-  text-align: right;
-  align-items: flex-end;
+  right: 3%;
 }
+
+.tracker-marker {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 228, 216, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tracker-marker::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.tracker-marker--earth::before { background: #6fa8dc; }
+.tracker-marker--moon::before { background: var(--silver); }
 
 .tracker-body-label {
   font-size: 0.55rem;
@@ -791,6 +826,8 @@ body {
   font-size: 0.55rem;
   letter-spacing: 0.04em;
   color: var(--silver);
+  text-align: center;
+  line-height: 1.4;
 }
 
 /* Telemetry panel — stacked card below the scene on mobile */
@@ -807,6 +844,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
+  min-width: 0;
 }
 
 .tracker-stat {
@@ -952,18 +990,23 @@ body {
     position: relative;
   }
 
+  .tracker-main-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
   .tracker-stats {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.5rem;
-    padding-right: 7rem;
+    flex: 1;
   }
 
   .tracker-rocket {
     display: block;
-    position: absolute;
-    right: 1.5rem;
-    bottom: 1.5rem;
-    width: 6rem;
+    position: static;
+    flex-shrink: 0;
+    width: 8rem;
     height: auto;
   }
 

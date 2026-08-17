@@ -152,17 +152,20 @@ function renderBrochure() {
         </div>
 
         <div class="tracker-endpoint tracker-endpoint--earth">
+          <span class="tracker-marker tracker-marker--earth"></span>
           <span class="tracker-body-label">EARTH</span>
-          <span class="tracker-coords">34.05°N 118.24°W</span>
+          <span class="tracker-coords">34.05°N<br>118.24°W</span>
         </div>
         <div class="tracker-endpoint tracker-endpoint--moon">
+          <span class="tracker-marker tracker-marker--moon"></span>
           <span class="tracker-body-label">MOON</span>
-          <span class="tracker-coords">0.67°N 23.47°E</span>
+          <span class="tracker-coords">0.67°N<br>23.47°E</span>
         </div>
       </div>
 
       <div class="tracker-panel">
-        <div class="tracker-stats">
+        <div class="tracker-main-row">
+          <div class="tracker-stats">
           <div class="tracker-stat">
             <span class="tracker-stat-label">DISTANCE REMAINING</span>
             <span class="tracker-stat-value" id="trackerDistance">—</span>
@@ -196,9 +199,10 @@ function renderBrochure() {
               `).join('')}
             </div>
           </div>
-        </div>
+          </div>
 
-        <img class="tracker-rocket" src="/src/images/lunar-tracker/spaceship.png" alt="" aria-hidden="true">
+          <img class="tracker-rocket" src="/src/images/lunar-tracker/spaceship.png" alt="" aria-hidden="true">
+        </div>
 
         <div class="tracker-footer">
           <div class="tracker-footer-item"><span class="tracker-footer-label">VECTOR</span><span class="tracker-footer-value">062.4° AZ</span></div>
