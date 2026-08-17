@@ -186,7 +186,8 @@ body {
 }
 
 .page-hero-headline {
-  font-family: var(--display);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
   font-size: clamp(3rem, 14vw, 6rem);
   line-height: 0.95;
   letter-spacing: 0.02em;
@@ -197,7 +198,7 @@ body {
 
 .page-hero-sub {
   font-size: 0.9rem;
-  color: var(--gray);
+  color: var(--warm-white);
   max-width: 340px;
   line-height: 1.75;
 }
@@ -221,7 +222,8 @@ body {
 }
 
 .editorial-headline {
-  font-family: var(--display);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
   font-size: clamp(1.8rem, 8vw, 3rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -232,7 +234,7 @@ body {
 
 .editorial-body {
   font-size: 0.9rem;
-  color: var(--silver);
+  color: var(--warm-white);
   line-height: 1.85;
   max-width: 600px;
 }
@@ -259,7 +261,8 @@ body {
 }
 
 .journey-step-title {
-  font-family: var(--display);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
   font-size: clamp(1.6rem, 7vw, 2.5rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -270,7 +273,7 @@ body {
 
 .journey-step-body {
   font-size: 0.9rem;
-  color: var(--silver);
+  color: var(--warm-white);
   line-height: 1.85;
   margin-bottom: 1rem;
   max-width: 560px;
@@ -290,7 +293,8 @@ body {
 }
 
 .page-cta-headline {
-  font-family: var(--display);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
   font-size: clamp(2.5rem, 11vw, 5rem);
   line-height: 0.95;
   letter-spacing: 0.02em;
@@ -301,7 +305,7 @@ body {
 
 .page-cta-sub {
   font-size: 0.88rem;
-  color: var(--gray);
+  color: var(--warm-white);
   max-width: 320px;
   line-height: 1.7;
   margin-bottom: 2.5rem;
@@ -375,15 +379,15 @@ body {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--warm-white);
-  margin-bottom: 1.5rem;
+  margin-bottom: 16px;
 }
 
 .hero-sub {
   font-size: 0.9rem;
-  color: var(--gray);
+  color: var(--warm-white);
   max-width: 340px;
   line-height: 1.7;
-  margin-bottom: 2.25rem;
+  margin-bottom: 32px;
 }
 
 .hero-cta {
@@ -421,8 +425,9 @@ body {
 }
 
 .section-heading {
-  font-family: var(--display);
-  font-size: clamp(2.8rem, 12vw, 5rem);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
+  font-size: clamp(2.2rem, 10vw, 3.5rem);
   line-height: 0.95;
   color: var(--warm-white);
   text-transform: uppercase;
@@ -495,8 +500,9 @@ body {
 }
 
 .offering-name {
-  font-family: var(--display);
-  font-size: clamp(2.2rem, 10vw, 3.5rem);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
+  font-size: clamp(2.2rem, 10vw, 2.2rem);
   line-height: 0.95;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -514,7 +520,7 @@ body {
 
 .offering-feel {
   font-size: 0.88rem;
-  color: var(--gray);
+  color: var(--warm-white);
   line-height: 1.75;
   margin-bottom: 1.75rem;
 }
@@ -729,8 +735,37 @@ body {
   height: 100%;
 }
 
-#trackerMarker {
-  filter: drop-shadow(0 0 6px rgba(200, 169, 107, 0.9));
+.tt-dash {
+  fill: none;
+  stroke: #C8A96B;
+  stroke-width: 1;
+  stroke-dasharray: 3 6;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+.tt-bloom {
+  fill: #C8A96B;
+  opacity: 0.18;
+  filter: blur(6px);
+}
+
+.tt-ring-outer {
+  fill: none;
+  stroke: #C8A96B;
+  stroke-width: 0.75;
+  opacity: 0.45;
+}
+
+.tt-ring-inner {
+  fill: none;
+  stroke: #C8A96B;
+  stroke-width: 1;
+  opacity: 0.8;
+}
+
+.tt-point-core {
+  fill: #E8E4D8;
 }
 
 .tracker-waypoint {
@@ -1036,7 +1071,7 @@ body {
 .close-cta-bg-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(8, 10, 9, 0.72);
+  background: rgba(8, 10, 9, 0.50);
   z-index: 1;
 }
 
@@ -1048,7 +1083,8 @@ body {
 }
 
 .close-cta-headline {
-  font-family: var(--display);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
   font-size: clamp(3rem, 14vw, 6rem);
   line-height: 0.95;
   letter-spacing: 0.02em;
@@ -1059,7 +1095,7 @@ body {
 
 .close-cta-sub {
   font-size: 0.88rem;
-  color: var(--gray);
+  color: var(--warm-white);
   max-width: 320px;
   line-height: 1.7;
   margin-bottom: 2.5rem;

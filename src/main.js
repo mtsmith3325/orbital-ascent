@@ -102,7 +102,7 @@ function renderBrochure() {
     <section class="hero">
       <video class="hero-video" id="heroVideo" src="/videos/hero-video-seq.mp4" autoplay muted loop playsinline></video>
       <div class="hero-overlay"></div>
-      <h1 class="hero-headline">The Overview<br>Effect.<br>Live It.</h1>
+      <h1 class="hero-headline">BEYOND ORDINARY.</h1>
       <p class="hero-sub">Orbital flights, lunar flybys, and extended station residencies for the world's most adventurous travellers.</p>
       <button type="button" class="hero-cta" id="heroCta">Explore the Program →</button>
       <button type="button" class="hero-video-toggle" id="heroVideoToggle" aria-label="Pause video">
@@ -142,8 +142,13 @@ function renderBrochure() {
         <img class="tracker-scene-bg" src="/src/images/lunar-tracker/lunartracker-bg.jpg" alt="" aria-hidden="true">
 
         <svg class="tracker-arc-svg" viewBox="0 0 1672 941" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path id="trackerArcPath" d="M 560,470 Q 1010,80 1460,290" fill="none" stroke="#B7B7AC" stroke-width="3" stroke-dasharray="14 11" opacity="0.7"/>
-          <circle id="trackerMarker" r="10" fill="#C8A96B"/>
+          <path id="trackerArcPath" d="M 560,470 Q 1010,80 1460,290" class="tt-dash"/>
+          <g id="trackerMarker">
+            <circle r="34" class="tt-bloom"/>
+            <circle r="11" class="tt-ring-outer"/>
+            <circle r="6.5" class="tt-ring-inner"/>
+            <circle r="3" class="tt-point-core"/>
+          </g>
         </svg>
 
         <div class="tracker-waypoint" id="trackerWaypoint">
@@ -217,7 +222,7 @@ function renderBrochure() {
     <section class="close-cta-section">
       <img class="close-cta-bg" src="/src/images/moon-footer.png" alt="" aria-hidden="true">
       <div class="close-cta-bg-overlay"></div>
-      <h2 class="close-cta-headline reveal">Where Will<br>You Be<br>In It?</h2>
+      <h2 class="hero-headline reveal">YOUR PLACE AWAITS</h2>
       <p class="close-cta-sub reveal stagger-1">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
       <button type="button" class="close-cta-button reveal stagger-2" id="closeCta">Join the Mission →</button>
     </section>
@@ -606,8 +611,7 @@ function initTracker() {
     if (!arcPath || !marker) return;
     const len = arcPath.getTotalLength();
     const pt  = arcPath.getPointAtLength(len * progress);
-    marker.setAttribute('cx', pt.x);
-    marker.setAttribute('cy', pt.y);
+    marker.setAttribute('transform', `translate(${pt.x},${pt.y})`);
   }
 
   function render() {
