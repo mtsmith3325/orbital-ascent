@@ -393,6 +393,7 @@ function bindPageEvents() {
     if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
   });
   initHamburger();
+  initProcessCards();
 }
 
 function refreshFunnel() {
@@ -543,6 +544,29 @@ function bindFunnelEvents() {
   document.getElementById('confirmDone')?.addEventListener('click', closeFunnel);
 }
 
+// ─── Process Cards (Journey page) ────────────────────────────────────────────
+function initProcessCards() {
+  const cards   = document.querySelectorAll('.pcard');
+  const dots    = document.querySelectorAll('.pdot');
+  const counter = document.getElementById('processCounter');
+  const prevBtn = document.getElementById('processPrev');
+  const nextBtn = document.getElementById('processNext');
+  if (!cards.length) return;
+
+  let active = 0;
+
+  function goTo(index) {
+    active = Math.max(0, Math.min(cards.length - 1, index));
+    cards.forEach((c, i) => c.classList.toggle('is-active', i === active));
+    dots.forEach((d, i)  => d.classList.toggle('is-active', i === active));
+    if (counter) counter.textContent = String(active + 1).padStart(2, '0');
+  }
+
+  prevBtn?.addEventListener('click', () => goTo(active - 1));
+  nextBtn?.addEventListener('click', () => goTo(active + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+}
+
 // ─── Carousel ─────────────────────────────────────────────────────────────────
 function initCarousel() {
   const track = document.getElementById('carouselTrack');
@@ -565,6 +589,29 @@ function initCarousel() {
   prevButtons.forEach((b) => b.addEventListener('click', () => goTo(current - 1)));
   nextButtons.forEach((b) => b.addEventListener('click', () => goTo(current + 1)));
   dots.forEach((d) => d.addEventListener('click', () => goTo(Number(d.dataset.slide))));
+
+  // Mouse drag-to-swipe for desktop
+  let isDragging = false, dragStartX = 0, scrollStartLeft = 0;
+  track.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    scrollStartLeft = track.scrollLeft;
+    track.setPointerCapture(e.pointerId);
+    track.style.cursor = 'grabbing';
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    track.scrollLeft = scrollStartLeft - (e.clientX - dragStartX);
+  });
+  track.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.cursor = '';
+    const delta = e.clientX - dragStartX;
+    if (Math.abs(delta) > 40) goTo(delta < 0 ? current + 1 : current - 1);
+    else goTo(current); // snap back if flick was too short
+  });
+  track.addEventListener('pointercancel', () => { isDragging = false; track.style.cursor = ''; });
 
   // Sync dots when user drag-scrolls
   let scrollTimer;
@@ -659,10 +706,21 @@ function initScrollBehavior() {
   const hero = document.querySelector('.hero');
   const heroBottom = hero ? hero.offsetHeight : 0;
 
+  let lastY = window.scrollY;
+
   const onScroll = () => {
     const y = window.scrollY;
-    if (nav) nav.classList.toggle('scrolled', y > 60);
+    if (nav) {
+      nav.classList.toggle('scrolled', y > 60);
+      // hide on scroll down, reveal on scroll up; always show near top
+      if (y < 80) {
+        nav.classList.remove('is-hidden');
+      } else {
+        nav.classList.toggle('is-hidden', y > lastY);
+      }
+    }
     if (bar) bar.classList.toggle('visible', y > heroBottom * 0.6);
+    lastY = y;
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
