@@ -139,7 +139,7 @@ function renderBrochure() {
       </div>
 
       <div class="tracker-scene">
-        <img class="tracker-scene-bg" src="/src/images/lunar-tracker/lunartracker-bg.jpg" alt="" aria-hidden="true">
+        <img class="tracker-scene-bg" src="/images/lunar-tracker/lunartracker-bg.jpg" alt="" aria-hidden="true">
 
         <svg class="tracker-arc-svg" viewBox="0 0 1672 941" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path id="trackerArcPath" d="M 560,470 Q 1010,80 1460,290" class="tt-dash"/>
@@ -206,7 +206,7 @@ function renderBrochure() {
           </div>
           </div>
 
-          <img class="tracker-rocket" src="/src/images/lunar-tracker/spaceship.png" alt="" aria-hidden="true">
+          <img class="tracker-rocket" src="/images/lunar-tracker/spaceship.png" alt="" aria-hidden="true">
         </div>
 
         <div class="tracker-footer">
@@ -220,7 +220,7 @@ function renderBrochure() {
     </section>
 
     <section class="close-cta-section">
-      <img class="close-cta-bg" src="/src/images/moon-footer.png" alt="" aria-hidden="true">
+      <img class="close-cta-bg" src="/images/moon-footer.png" alt="" aria-hidden="true">
       <div class="close-cta-bg-overlay"></div>
       <h2 class="close-cta-headline reveal">YOUR PLACE AWAITS</h2>
       <p class="close-cta-sub reveal stagger-1">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>

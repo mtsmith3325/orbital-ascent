@@ -6,28 +6,28 @@ const steps = [
     title: 'THE ADVISORY CALL',
     body: 'Every mission begins with a conversation. Your assigned advisor — a former mission specialist or senior operations lead — will walk you through the three program options, answer questions about physical requirements, and help you assess which mission is right for where you are now. There is no commitment at this stage. The call typically runs 45–60 minutes.',
     timeline: 'WITHIN 48 HOURS OF INQUIRY',
-    image: '/src/images/process/01_advisory_call.png'
+    image: '/images/process/01_advisory_call.png'
   },
   {
     num: '02',
     title: 'MEDICAL & FITNESS ASSESSMENT',
     body: 'Spaceflight is physically demanding. Before a mission is assigned, all passengers complete a standard aerospace medical clearance: cardiovascular evaluation, inner-ear vestibular testing, and a structured fitness baseline. Our medical partners are located in three cities and offer full confidentiality. The vast majority of applicants clear without issue. The process takes one to two days.',
     timeline: '2–4 WEEKS POST-CALL',
-    image: '/src/images/process/02_medical_fitness.png'
+    image: '/images/process/02_medical_fitness.png'
   },
   {
     num: '03',
     title: 'MISSION TRAINING',
     body: 'Pre-flight training is conducted at our facility and runs three to five days for orbital missions, or seven days for lunar and station programs. You will cover emergency protocols, vehicle systems orientation, zero-g adaptation exercises, and suit operations. This is not a simulation of the experience — it is the operational grounding that makes the experience possible. Most guests describe it as the second-most extraordinary week of their lives.',
     timeline: '6–10 WEEKS BEFORE LAUNCH',
-    image: '/src/images/process/03_mission_training.png'
+    image: '/images/process/03_mission_training.png'
   },
   {
     num: '04',
     title: 'LAUNCH DAY',
     body: 'You arrive at the launch facility the night before. The morning is structured and calm — suit-up, medical check, vehicle walkthrough with the flight crew. There are no surprises at this point. By the time the countdown starts, every system has been verified, every contingency rehearsed. What remains is the launch itself — and nothing in your preparation will fully prepare you for it. That is the point.',
     timeline: 'T-MINUS ZERO',
-    image: '/src/images/process/04_launch_day.png',
+    image: '/images/process/04_launch_day.png',
     video: '/videos/04_launch_day-video.mov'
   }
 ];
@@ -88,7 +88,7 @@ export function renderJourney() {
 
     <section class="process-cta-strip">
       <div class="process-cta-strip-img">
-        <img src="/src/images/journey/joureny-hero.png" alt="">
+        <img src="/images/journey/joureny-hero.png" alt="">
         <div class="process-cta-strip-img-overlay"></div>
       </div>
       <div class="process-cta-strip-content">
