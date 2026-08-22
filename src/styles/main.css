@@ -1603,7 +1603,8 @@ body {
 }
 
 .process-heading {
-  font-family: var(--display);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
   font-size: clamp(3rem, 14vw, 6rem);
   line-height: 0.92;
   letter-spacing: 0.02em;
@@ -1809,7 +1810,8 @@ body {
 }
 
 .process-cta-strip-heading {
-  font-family: var(--display);
+  font-family: 'Barlow Condensed', var(--display);
+  font-weight: 300;
   font-size: clamp(3rem, 14vw, 6rem);
   line-height: 0.92;
   letter-spacing: 0.02em;
