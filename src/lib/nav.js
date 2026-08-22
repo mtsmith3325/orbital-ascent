@@ -14,7 +14,7 @@ export function renderNav(active = 'home') {
     <div class="nav-drawer" id="navDrawer" aria-hidden="true">
       <a href="#" class="drawer-link${active === 'home' ? ' is-active' : ''}" id="drawerHome">Home</a>
       <a href="#experience" class="drawer-link${active === 'experience' ? ' is-active' : ''}">The Experience</a>
-      <a href="#journey" class="drawer-link${active === 'journey' ? ' is-active' : ''}">The Journey</a>
+      <a href="#journey" class="drawer-link${active === 'journey' ? ' is-active' : ''}">The Process</a>
     </div>
     <div class="nav-drawer-backdrop" id="navDrawerBackdrop"></div>
   `;
