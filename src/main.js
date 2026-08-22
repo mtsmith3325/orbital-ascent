@@ -546,25 +546,61 @@ function bindFunnelEvents() {
 
 // ─── Process Cards (Journey page) ────────────────────────────────────────────
 function initProcessCards() {
-  const cards   = document.querySelectorAll('.pcard');
+  const track   = document.getElementById('processCards');
   const dots    = document.querySelectorAll('.pdot');
   const counter = document.getElementById('processCounter');
   const prevBtn = document.getElementById('processPrev');
   const nextBtn = document.getElementById('processNext');
-  if (!cards.length) return;
+  if (!track) return;
 
-  let active = 0;
+  const count = track.querySelectorAll('.pcard').length;
+  let current = 0;
 
   function goTo(index) {
-    active = Math.max(0, Math.min(cards.length - 1, index));
-    cards.forEach((c, i) => c.classList.toggle('is-active', i === active));
-    dots.forEach((d, i)  => d.classList.toggle('is-active', i === active));
-    if (counter) counter.textContent = String(active + 1).padStart(2, '0');
+    current = Math.max(0, Math.min(count - 1, index));
+    track.scrollTo({ left: track.offsetWidth * current, behavior: 'smooth' });
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+    if (counter) counter.textContent = String(current + 1).padStart(2, '0');
+    prevBtn?.classList.toggle('is-disabled', current === 0);
+    nextBtn?.classList.toggle('is-disabled', current === count - 1);
   }
 
-  prevBtn?.addEventListener('click', () => goTo(active - 1));
-  nextBtn?.addEventListener('click', () => goTo(active + 1));
+  prevBtn?.addEventListener('click', () => goTo(current - 1));
+  nextBtn?.addEventListener('click', () => goTo(current + 1));
   dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+
+  let isDragging = false, dragStartX = 0, scrollStartLeft = 0;
+  track.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    scrollStartLeft = track.scrollLeft;
+    track.setPointerCapture(e.pointerId);
+    track.style.cursor = 'grabbing';
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    track.scrollLeft = scrollStartLeft - (e.clientX - dragStartX);
+  });
+  track.addEventListener('pointerup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.cursor = '';
+    const delta = e.clientX - dragStartX;
+    if (Math.abs(delta) > 40) goTo(delta < 0 ? current + 1 : current - 1);
+    else goTo(current);
+  });
+  track.addEventListener('pointercancel', () => { isDragging = false; track.style.cursor = ''; });
+
+  let scrollTimer;
+  track.addEventListener('scroll', () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const idx = Math.round(track.scrollLeft / track.offsetWidth);
+      if (idx !== current) goTo(idx);
+    }, 80);
+  }, { passive: true });
+
+  goTo(0);
 }
 
 // ─── Carousel ─────────────────────────────────────────────────────────────────
