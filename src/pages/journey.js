@@ -69,11 +69,12 @@ export function renderJourney() {
           <p class="process-subheading"># Your Path to Launch.</p>
           <p class="process-desc">From the first conversation to lift-off — a clear, honest account of what the process involves and what to expect at every stage.</p>
         </div>
-        <div class="process-nav">
-          <button type="button" class="process-nav-btn" id="processPrev" aria-label="Previous step">←</button>
-          <span class="process-nav-counter"><span id="processCounter">01</span> / 04</span>
-          <button type="button" class="process-nav-btn" id="processNext" aria-label="Next step">→</button>
-        </div>
+      </div>
+
+      <div class="process-nav">
+        <button type="button" class="process-nav-btn" id="processPrev" aria-label="Previous step">←</button>
+        <span class="process-nav-counter"><span id="processCounter">01</span> / 04</span>
+        <button type="button" class="process-nav-btn" id="processNext" aria-label="Next step">→</button>
       </div>
 
       <div class="process-cards teaser-carousel" id="processCards">
