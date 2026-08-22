@@ -1847,6 +1847,7 @@ body {
 /* ─── Process CTA strip ──────────────────────────────────────────────────── */
 .process-cta-strip {
   display: flex;
+  flex-direction: row-reverse;
   align-items: stretch;
   min-height: 200px;
   border-top: 1px solid rgba(183, 183, 172, 0.1);
@@ -1872,7 +1873,7 @@ body {
 .process-cta-strip-img-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, transparent 60%, var(--black) 100%);
+  background: linear-gradient(to left, transparent 60%, var(--black) 100%);
   z-index: 1;
 }
 
