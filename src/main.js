@@ -569,16 +569,6 @@ function initProcessCards() {
     if (counter) counter.textContent = String(current + 1).padStart(2, '0');
     prevBtn?.classList.toggle('is-disabled', current === 0);
     nextBtn?.classList.toggle('is-disabled', current === count - 1);
-
-    // Trigger reveal on the last card each time it is navigated to
-    if (current === count - 1) {
-      const lastCard = track.querySelector('.pcard:last-child');
-      if (lastCard) {
-        lastCard.classList.remove('is-revealing');
-        void lastCard.offsetWidth; // force reflow to restart animation
-        lastCard.classList.add('is-revealing');
-      }
-    }
   }
 
   prevBtn?.addEventListener('click', () => goTo(current - 1));
@@ -606,6 +596,19 @@ function initProcessCards() {
     else goTo(current);
   });
   track.addEventListener('pointercancel', () => { isDragging = false; track.style.cursor = ''; });
+
+  // Scroll-driven opacity: last card fades in as track scrolls toward it
+  const lastCard = track.querySelector('.pcard:last-child');
+  if (lastCard && isTeaser) {
+    const updateLastOpacity = () => {
+      const cw = cardWidth();
+      const fadeStart = cw * (count - 2); // scroll position of second-to-last snap
+      const progress = Math.max(0, Math.min(1, (track.scrollLeft - fadeStart) / cw));
+      lastCard.style.opacity = progress;
+    };
+    track.addEventListener('scroll', updateLastOpacity, { passive: true });
+    updateLastOpacity();
+  }
 
   let scrollTimer;
   track.addEventListener('scroll', () => {

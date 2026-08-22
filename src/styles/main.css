@@ -1806,30 +1806,6 @@ body {
   aspect-ratio: 400/147;
 }
 
-/* ─── Card 04 reveal animation ───────────────────────────────────────────── */
-@keyframes pcard-reveal-media {
-  from { opacity: 0.3; transform: scale(1.08); }
-  to   { opacity: 1;   transform: scale(1); }
-}
-
-@keyframes pcard-reveal-text {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.pcard:last-child.is-revealing .pcard-img img,
-.pcard:last-child.is-revealing .pcard-img video {
-  animation: pcard-reveal-media 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.pcard:last-child.is-revealing .pcard-body {
-  animation: pcard-reveal-text 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
-}
-
-.pcard:last-child.is-revealing .pcard-footer {
-  animation: pcard-reveal-text 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
-}
-
 /* ─── Process dots ───────────────────────────────────────────────────────── */
 .process-dots {
   display: flex;
