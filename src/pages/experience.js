@@ -5,7 +5,7 @@ export function renderExperience() {
     ${renderNav('experience')}
 
     <section class="page-hero page-hero--has-bg">
-      <img class="page-hero-bg" src="/images/journey/joureny-hero.png" alt="" aria-hidden="true">
+      <img class="page-hero-bg" src="/images/journey/journey-hero.png" alt="" aria-hidden="true">
       <div class="page-hero-bg-overlay"></div>
       <p class="page-hero-eyebrow">The Program</p>
       <h1 class="page-hero-headline">What Spaceflight<br>Actually Feels Like.</h1>

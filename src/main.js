@@ -222,7 +222,7 @@ function renderBrochure() {
     <section class="close-cta-section">
       <img class="close-cta-bg" src="/images/moon-footer.png" alt="" aria-hidden="true">
       <div class="close-cta-bg-overlay"></div>
-      <h2 class="close-cta-headline reveal">YOUR PLACE AWAITS</h2>
+      <h2 class="hero-headline reveal">YOUR PLACE AWAITS</h2>
       <p class="close-cta-sub reveal stagger-1">An Orbital Ascent advisor will walk you through options, answer every question, and get you on the path to launch.</p>
       <button type="button" class="close-cta-button reveal stagger-2" id="closeCta">Join the Mission →</button>
     </section>
@@ -393,7 +393,6 @@ function bindPageEvents() {
     if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
   });
   initHamburger();
-  initProcessCards();
 }
 
 function refreshFunnel() {
@@ -542,84 +541,6 @@ function bindFunnelEvents() {
   });
 
   document.getElementById('confirmDone')?.addEventListener('click', closeFunnel);
-}
-
-// ─── Process Cards (Journey page) ────────────────────────────────────────────
-function initProcessCards() {
-  const track   = document.getElementById('processCards');
-  const dots    = document.querySelectorAll('.pdot');
-  const counter = document.getElementById('processCounter');
-  const prevBtn = document.getElementById('processPrev');
-  const nextBtn = document.getElementById('processNext');
-  if (!track) return;
-
-  const count = track.querySelectorAll('.pcard').length;
-  let current = 0;
-  const isTeaser = track.classList.contains('teaser-carousel');
-
-  // Teaser variant scrolls by card width (70%); default scrolls by full track width.
-  function cardWidth() {
-    return isTeaser ? track.querySelector('.pcard').offsetWidth : track.offsetWidth;
-  }
-
-  function goTo(index) {
-    current = Math.max(0, Math.min(count - 1, index));
-    track.scrollTo({ left: cardWidth() * current, behavior: 'smooth' });
-    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
-    if (counter) counter.textContent = String(current + 1).padStart(2, '0');
-    prevBtn?.classList.toggle('is-disabled', current === 0);
-    nextBtn?.classList.toggle('is-disabled', current === count - 1);
-  }
-
-  prevBtn?.addEventListener('click', () => goTo(current - 1));
-  nextBtn?.addEventListener('click', () => goTo(current + 1));
-  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
-
-  let isDragging = false, dragStartX = 0, scrollStartLeft = 0;
-  track.addEventListener('pointerdown', (e) => {
-    isDragging = true;
-    dragStartX = e.clientX;
-    scrollStartLeft = track.scrollLeft;
-    track.setPointerCapture(e.pointerId);
-    track.style.cursor = 'grabbing';
-  });
-  track.addEventListener('pointermove', (e) => {
-    if (!isDragging) return;
-    track.scrollLeft = scrollStartLeft - (e.clientX - dragStartX);
-  });
-  track.addEventListener('pointerup', (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    track.style.cursor = '';
-    const delta = e.clientX - dragStartX;
-    if (Math.abs(delta) > 40) goTo(delta < 0 ? current + 1 : current - 1);
-    else goTo(current);
-  });
-  track.addEventListener('pointercancel', () => { isDragging = false; track.style.cursor = ''; });
-
-  // Scroll-driven opacity: last card fades in as track scrolls toward it
-  const lastCard = track.querySelector('.pcard:last-child');
-  if (lastCard && isTeaser) {
-    const updateLastOpacity = () => {
-      const cw = cardWidth();
-      const fadeStart = cw * (count - 2); // scroll position of second-to-last snap
-      const progress = Math.max(0, Math.min(1, (track.scrollLeft - fadeStart) / cw));
-      lastCard.style.opacity = 0.02 + 0.98 * progress;
-    };
-    track.addEventListener('scroll', updateLastOpacity, { passive: true });
-    updateLastOpacity();
-  }
-
-  let scrollTimer;
-  track.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      const idx = Math.round(track.scrollLeft / cardWidth());
-      if (idx !== current) goTo(idx);
-    }, 80);
-  }, { passive: true });
-
-  goTo(0);
 }
 
 // ─── Carousel ─────────────────────────────────────────────────────────────────
