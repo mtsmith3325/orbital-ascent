@@ -604,7 +604,7 @@ function initProcessCards() {
       const cw = cardWidth();
       const fadeStart = cw * (count - 2); // scroll position of second-to-last snap
       const progress = Math.max(0, Math.min(1, (track.scrollLeft - fadeStart) / cw));
-      lastCard.style.opacity = progress;
+      lastCard.style.opacity = 0.02 + 0.98 * progress;
     };
     track.addEventListener('scroll', updateLastOpacity, { passive: true });
     updateLastOpacity();
