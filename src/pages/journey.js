@@ -27,7 +27,8 @@ const steps = [
     title: 'LAUNCH DAY',
     body: 'You arrive at the launch facility the night before. The morning is structured and calm — suit-up, medical check, vehicle walkthrough with the flight crew. There are no surprises at this point. By the time the countdown starts, every system has been verified, every contingency rehearsed. What remains is the launch itself — and nothing in your preparation will fully prepare you for it. That is the point.',
     timeline: 'T-MINUS ZERO',
-    image: '/src/images/process/04_launch_day.png'
+    image: '/src/images/process/04_launch_day.png',
+    video: '/videos/04_launch_day-video.mov'
   }
 ];
 
@@ -35,7 +36,9 @@ export function renderJourney() {
   const cardsHTML = steps.map((s, i) => `
     <div class="pcard${i === 0 ? ' is-active' : ''}" data-index="${i}">
       <div class="pcard-img">
-        <img src="${s.image}" alt="">
+        ${s.video
+          ? `<video src="${s.video}" autoplay muted loop playsinline></video>`
+          : `<img src="${s.image}" alt="">`}
         <div class="pcard-tint"></div>
         <span class="pcard-num">${s.num}</span>
         <span class="pcard-label">${s.title}</span>
