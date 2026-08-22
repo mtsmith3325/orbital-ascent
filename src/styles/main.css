@@ -1801,6 +1801,11 @@ body {
   padding-right: 2rem;
 }
 
+/* Compensate aspect-ratio so image height matches the 70%-wide cards */
+.teaser-carousel .pcard:last-child .pcard-img {
+  aspect-ratio: 400/147;
+}
+
 /* ─── Process dots ───────────────────────────────────────────────────────── */
 .process-dots {
   display: flex;
