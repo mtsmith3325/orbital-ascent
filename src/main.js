@@ -569,6 +569,16 @@ function initProcessCards() {
     if (counter) counter.textContent = String(current + 1).padStart(2, '0');
     prevBtn?.classList.toggle('is-disabled', current === 0);
     nextBtn?.classList.toggle('is-disabled', current === count - 1);
+
+    // Trigger reveal on the last card each time it is navigated to
+    if (current === count - 1) {
+      const lastCard = track.querySelector('.pcard:last-child');
+      if (lastCard) {
+        lastCard.classList.remove('is-revealing');
+        void lastCard.offsetWidth; // force reflow to restart animation
+        lastCard.classList.add('is-revealing');
+      }
+    }
   }
 
   prevBtn?.addEventListener('click', () => goTo(current - 1));
