@@ -555,10 +555,16 @@ function initProcessCards() {
 
   const count = track.querySelectorAll('.pcard').length;
   let current = 0;
+  const isTeaser = track.classList.contains('teaser-carousel');
+
+  // Teaser variant scrolls by card width (70%); default scrolls by full track width.
+  function cardWidth() {
+    return isTeaser ? track.querySelector('.pcard').offsetWidth : track.offsetWidth;
+  }
 
   function goTo(index) {
     current = Math.max(0, Math.min(count - 1, index));
-    track.scrollTo({ left: track.offsetWidth * current, behavior: 'smooth' });
+    track.scrollTo({ left: cardWidth() * current, behavior: 'smooth' });
     dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
     if (counter) counter.textContent = String(current + 1).padStart(2, '0');
     prevBtn?.classList.toggle('is-disabled', current === 0);
@@ -595,7 +601,7 @@ function initProcessCards() {
   track.addEventListener('scroll', () => {
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(() => {
-      const idx = Math.round(track.scrollLeft / track.offsetWidth);
+      const idx = Math.round(track.scrollLeft / cardWidth());
       if (idx !== current) goTo(idx);
     }, 80);
   }, { passive: true });

@@ -73,7 +73,7 @@ export function renderJourney() {
         </div>
       </div>
 
-      <div class="process-cards" id="processCards">
+      <div class="process-cards teaser-carousel" id="processCards">
         ${cardsHTML}
       </div>
 

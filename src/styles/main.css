@@ -1785,6 +1785,16 @@ body {
   line-height: 1.3;
 }
 
+/* ─── Teaser carousel variant: shows 70% current + 30% peek of next ─────── */
+.teaser-carousel .pcard {
+  flex: 0 0 70%;
+}
+
+/* Allow last card to snap cleanly without dead space at the end */
+.teaser-carousel .pcard:last-child {
+  padding-right: calc(30% + 2rem);
+}
+
 /* ─── Process dots ───────────────────────────────────────────────────────── */
 .process-dots {
   display: flex;
