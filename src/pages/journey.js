@@ -66,7 +66,7 @@ export function renderJourney() {
         <div class="process-header-left">
           <p class="process-eyebrow">02</p>
           <h1 class="process-heading">THE PROCESS</h1>
-          <p class="process-subheading"># Your Path to Launch.</p>
+          <p class="process-subheading">Your Path to Launch.</p>
           <p class="process-desc">From the first conversation to lift-off — a clear, honest account of what the process involves and what to expect at every stage.</p>
         </div>
       </div>
@@ -88,7 +88,7 @@ export function renderJourney() {
 
     <section class="process-cta-strip">
       <div class="process-cta-strip-img">
-        <img src="/images/journey/joureny-hero.png" alt="">
+        <img src="/images/journey/journey-hero.png" alt="">
         <div class="process-cta-strip-img-overlay"></div>
       </div>
       <div class="process-cta-strip-content">

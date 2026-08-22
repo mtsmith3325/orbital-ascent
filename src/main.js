@@ -393,6 +393,30 @@ function bindPageEvents() {
     if (e.target === document.getElementById('funnelOverlay')) closeFunnel();
   });
   initHamburger();
+  initProcessCards();
+}
+
+function initProcessCards() {
+  const cards  = document.querySelectorAll('.pcard');
+  const dots   = document.querySelectorAll('.pdot');
+  const prev   = document.getElementById('processPrev');
+  const next   = document.getElementById('processNext');
+  const counter = document.getElementById('processCounter');
+  if (!cards.length) return;
+
+  let current = 0;
+
+  function goTo(idx) {
+    current = Math.max(0, Math.min(cards.length - 1, idx));
+    cards.forEach((c, i) => c.classList.toggle('is-active', i === current));
+    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+    if (counter) counter.textContent = String(current + 1).padStart(2, '0');
+  }
+
+  prev?.addEventListener('click', () => goTo(current - 1));
+  next?.addEventListener('click', () => goTo(current + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
+  goTo(0);
 }
 
 function refreshFunnel() {
