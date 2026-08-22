@@ -1790,9 +1790,10 @@ body {
   flex: 0 0 70%;
 }
 
-/* Allow last card to snap cleanly without dead space at the end */
+/* Last card breaks the teaser pattern — full width for impact */
 .teaser-carousel .pcard:last-child {
-  padding-right: calc(30% + 2rem);
+  flex: 0 0 100%;
+  padding-right: 2rem;
 }
 
 /* ─── Process dots ───────────────────────────────────────────────────────── */
